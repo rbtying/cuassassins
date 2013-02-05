@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ game.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ game.name }}</h1>
+
+<div class="secure">
+{% if user.is_authenticated and user.is_active %}
+{% if not squad_current %}
+<a class="button" href="{% url 'squad_add' game=game_current.name %}">Create Squad</a>
+<a class="button" href="{% url 'squad_join' game=game_current.name %}">Join Squad</a>
+{% else %}
+<a class="button" href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a>
+{% endif %}
+{% endif %}
+</div>
+<table class="vertical">
+    <tr><th>Game status:</th><td>{{ game.status_string }}</td></tr>
+    <tr><th>Squad size:</th><td>{{ game.squadsize }}</td></tr>
+    <tr><th>Disavowed deadline:</th><td>{{ game.disavowed_time }} hour{{ game.disavowed_time|pluralize }}</td></tr>
+    <tr><th>Police resurrection time:</th><td>{{ game.police_resurrect_time }} hour{{ game.police_resurrect_time|pluralize }}</td></tr>
+    <tr><th>Scoreboard:</th><td><a href="{% url 'game_scoreboard' game=game.name %}">Scoreboard</a></td></tr>
+    <tr><th>Kill records:</th><td><a href="{% url 'game_kills' game=game.name %}">Kills</a></td></tr>
+    <tr><th>Assassins:</th><td><a href="{% url 'game_assassins_list' game=game.name %}">List</a></td></tr>
+    <tr><th>Police:</th><td><a href="{% url 'game_police_list' game=game.name %}">List</a></td></tr>
+    <tr><th>Disavowed:</th><td><a href="{% url 'game_disavowed_list' game=game.name %}">List</a></td></tr>
+</table>
+{% block extra %}{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "game/details.html" %}
+
+{% block extra %}
+    <table class="vertical">
+        <tr><th>Game Join Code:</th><td>{{ game.code }}</td></tr>
+        <tr><th>Kill Contracts:</th><td><a href="{% url 'game_contracts_list' game=game.name %}">Contracts</a></td></tr>
+    </table>
+    <div id="game_admin">
+        {% if game.status == 0 %}
+            <a class="button" href="{% url 'game_start' game=game.name %}">Start Game</a>
+        {% elif game.status == 1 %}
+            <a class="button" href="{% url 'game_end' game=game.name %}">End Game</a>
+        {% elif game.status == 2 %}
+            <a class="button" href="{% url 'game_reset' game=game.name %}">Reset Game</a>
+            <a class="button" href="{% url 'game_delete' game=game.name %}">Delete Game</a>
+        {% endif %}
+        <a class="button" href="{% url 'police_add' game=game.name %}">Add Police</a>
+        <a class="button" href="{% url 'police_remove' game=game.name %}">Remove Police</a>
+    </div>
+{% endblock %}

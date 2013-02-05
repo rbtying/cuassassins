@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+
+{% block title %}Kill Reports for  {{ game.name }}{% endblock %}
+
+{% block content %}
+<h1>Kill Report</h1>
+<table class="vertical">
+    <tr><th>Killer:</th><td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.user.username }}</a></td></tr>
+    <tr><th>Corpse:</th><td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.user.username }}</a></td></tr>
+    <tr><th>Date:</th><td>{{ report.date }}</td></tr>
+    <tr><th>Type:</th><td>{{ report.type_string }}</td></tr>
+    <tr><th>Report:</th><td>{{ report.report }}</td></tr>
+</table>
+{% endblock %}

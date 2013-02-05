@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Games{% endblock %}
+
+{% block content %}
+<h1>Games</h1>
+
+<div class="game_create">
+    <a class="button" href="{% url 'game_create' %}">Create Game</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Scoreboard</th>
+        </tr>
+    </thead>
+
+    {% for game in games %}
+    <tr class="{{ game.status_string }}">
+        <td><a href="{% url 'game_details' game=game.name %}">{{ game.name }}</a></td>
+        <td>{{ game.status_string }}</td>
+        <td><a href="{% url 'game_scoreboard' game=game.name %}">Scoreboard</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if games.has_previous %}
+            <a class="prev" href="?page={{ games.previous_page_number}}">Previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ games.number }} of {{ games.paginator.num_pages }}
+        </span>
+
+        {% if games.has_next %}
+            <a class="next" href="?page={{ games.next_page_number }}">Next</a>
+        {% endif %}
+</div>
+{% endblock %}

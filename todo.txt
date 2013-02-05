@@ -1,0 +1,3 @@
+4. integration w/ sendgrid?
+5. finish up templating
+6. information pages

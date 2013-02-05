@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ listtitle }}{% endblock %}
+
+{% block content %}
+<h1>{{ listtitle }} in {{ game.name }}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Kills</th>
+        </tr>
+    </thead>
+
+    {% for assassin in assassins %}
+    <tr {% if not assassin.alive %}class="dead"{% endif %}>
+        <td>{{ assassins.start_index|add:forloop.counter0 }}</td>
+        <td><a href="{% url 'assassin_details' game=game.name username=assassin.user.username %}">{{ assassin.user.username }}</a></td>
+        <td>{{ assassin.status_string }}</td>
+        <td><a href="{% url 'player_kills' game=game.name username=assassin.user.username %}">{{ assassin.kills }}</a></td>
+        {% endfor %}
+    </tr>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if assassins.has_previous %}
+            <a class="prev" href="?page={{ assassins.previous_page_number}}">Previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ assassins.number }} of {{ assassins.paginator.num_pages }}
+        </span>
+
+        {% if assassins.has_next %}
+            <a class="next" href="?page={{ assassins.next_page_number }}">Next</a>
+        {% endif %}
+</div>
+{% endblock %}

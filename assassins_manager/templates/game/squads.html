@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Scoreboard{% endblock %}
+
+{% block content %}
+<h1>{{ listtitle }} in {{ game.name }}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Kills</th>
+            {% for i in squadsize %}<th>Member {{ i }}</th>{% endfor %}
+        </tr>
+    </thead>
+    {% for squad in squads %}
+        <tr {% if not squad.alive %}class="dead"{% endif %}>
+            <td>{{ squads.start_index|add:forloop.counter0 }}</td>
+            <td><a href="{% url 'squad_details' game=game.name squad=squad.id %}">{{ squad.name }}</a></td>
+            <td>{% if squad.alive %}Alive{% else %}Dead{% endif %}</td>
+            <td>{{ squad.kills }} kill{{ squad.kills|pluralize }}</td>
+            {% for member in squad.assassin_set.all %}
+            <td>
+                <a href="{% url 'assassin_details' game=game.name username=member.user.username %}">
+                    {{ member.user.username }}
+                </a>
+            </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if squads.has_previous %}
+            <a class="prev" href="?page={{ squads.previous_page_number}}">Previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ squads.number }} of {{ squads.paginator.num_pages }}
+        </span>
+
+        {% if squads.has_next %}
+            <a class="next" href="?page={{ squads.next_page_number }}">Next</a>
+        {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Squad Details: {{ squad.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ squad.name }}</h1>
+
+<table class="vertical">
+    <tr>
+        <th>Name:</th>
+        <td>
+            {{ squad.name }}
+        </td>
+    </tr>
+    {% if show_code %}
+    <tr>
+        <th>Join Code</th>
+        <td>
+            {{ squad.code }}
+        </td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th>Kills:</th>
+        <td>{{ squad.kills }}</td>
+    </tr>
+    <tr>
+        <th>Contracts:</th>
+        <td>
+            <a href="{% url 'my_contracts' game=game.name %}">
+
+                {{ squad.active_contracts|length }} active, {{ squad.completed_contracts|length }} completed
+            </a>
+        </td>
+    <tr>
+        <th>Status:</th>
+        <td>
+            {% if squad.alive %}
+            Alive
+            {% else %}
+            Dead
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Members:</th>
+        <td>
+            <ul>
+                {% for member in squad.assassin_set.all %}
+                <li class="{% if member.alive %}alive{% else %}dead{% endif %}">
+                    <a href="{% url 'assassin_details' game=game.name username=member.user.username %}">
+                        {{ member.user.username }} ({{ member.status_string }})
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </td>
+</table>
+{% endblock %}

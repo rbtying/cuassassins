@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Squad Contracts: {{ squad.name }}{% endblock %}
+
+{% block content %}
+<h1>Contracts {{ squad.name }}</h1>
+
+<table>
+    <tr><th>ID</th><th>Holder</th><th>Target</th><th>Status</th></tr>
+    {% for contract in contracts %}
+    <tr class="{{ contract.status_string }}">
+        <td>{{ contract.id }}</td>
+        <td>
+            <a href="{% url 'squad_details' game=game.name squad=contract.holder.id %}">
+                {{ contract.holder }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'squad_details' game=game.name squad=contract.target.id %}">
+                {{ contract.target }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'contract_details' game=game.name contract=contract.id %}">
+                {{ contract.status_string }}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

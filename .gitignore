@@ -1,0 +1,13 @@
+database.sqlite
+/media
+/static
+
+/assassins/local_settings.py
+
+env
+
+.*.swp
+*~
+*.orig
+
+*.pyc

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Kill Reports for  {{ game.name }}{% endblock %}
+
+{% block content %}
+<h1>Reports: {{ game.name }}</h1>
+
+{% if reports %}
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Killer</th>
+            <th>Corpse</th>
+        </tr>
+    </thead>
+    {% for report in reports %}
+    <tr>
+        <td><a href="{% url 'kill_report' game=game.name report=report.id %}">{{ report.date }}</a></td>
+        <td>{{ report.type_string }}</td>
+        <td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.user.username }}</a></td>
+        <td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.user.username }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if reports.has_previous %}
+            <a class="prev" href="?page={{ reports.previous_page_number}}">Previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ reports.number }} of {{ reports.paginator.num_pages }}
+        </span>
+
+        {% if reports.has_next %}
+            <a class="next" href="?page={{ reports.next_page_number }}">Next</a>
+        {% endif %}
+</div>
+{% else %}
+<p>No kills have been made yet</p>
+{% endif %}
+{% endblock %}

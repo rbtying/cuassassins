@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Contract Details: #{{ contract.id }}{% endblock %}
+
+{% block content %}
+<h1>Contract #{{ contract.id }}</h1>
+
+{% if access %}
+<table>
+    <tr>
+        <th>Holder:</th>
+        <td>
+            <a href="{% url 'squad_details' game=game.name squad=contract.holder.id %}">{{ contract.holder }}</a>
+        </td>
+    </tr>
+    <tr>
+        <th>Target:</th>
+        <td>
+            <a href="{% url 'squad_details' game=game.name squad=contract.target.id %}">{{ contract.target }}</a>
+        </td>
+    </tr>
+    <tr>
+        <th>Status:</th>
+        <td>
+            {{ contract.status_string }}
+        </td>
+    </tr>
+</table>
+{% else %}
+<p class="denied">Error: you do not have permission to view this contract</p>
+{% endif %}
+{% endblock %}
