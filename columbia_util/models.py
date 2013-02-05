@@ -4,9 +4,10 @@ from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_delete
 from django.conf import settings
+from django_facebook.models import FacebookProfileModel
 import services
 
-class ColumbiaUserProfile(models.Model):
+class ColumbiaUserProfile(FacebookProfileModel):
     """ Class to keep track of Columbia-specific profile needs """
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
@@ -39,8 +40,8 @@ class ColumbiaUserProfile(models.Model):
             if not ldap.get('mail') is None:
                 self.user.email = ldap.get('mail')[0]
 
-            if commit:
-                self.save()
+        if commit:
+            self.save()
 
 @receiver(post_save, sender=User)
 def createColumbiaUserProfile(sender, instance, created, **kwargs):

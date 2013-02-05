@@ -261,6 +261,12 @@ a.button {
     margin-right: 12px;
 }
 
+/* pictures */
+.user_photo img {
+    margin: 0 auto;
+    display: block;
+}
+
 /* login form */
 .register_link {
     margin-top: 10px;

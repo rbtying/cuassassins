@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+<h1>Login</h1>
+
+<form action="{% url 'facebook_connect' %}?facebook_login=1" method="post">
+    <a href="javascript:void(0);" class="button" onclick="F.connect(this.parentNode);">Login with Facebook</a>
+    <input type="hidden" value="{{ request.path }}" name="next" />
+</form>
+<form action="{% url 'facebook_connect' %}?facebook_login=1" method="post">
+    <a href="javascript:void(0);" onclick="F.connect(this.parentNode);">Test fresh registration</a>
+    <input type="hidden" value="{{ request.path }}" name="next" />
+    <input type="hidden" value="1" name="force_registration_hard" />
+</form>
+{% endblock %}

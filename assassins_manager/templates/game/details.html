@@ -13,6 +13,8 @@
 {% else %}
 <a class="button" href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a>
 {% endif %}
+{% else %}
+<a class="button" href="{% url 'auth_login' %}">Log in to join the game</a>
 {% endif %}
 </div>
 <table class="vertical">

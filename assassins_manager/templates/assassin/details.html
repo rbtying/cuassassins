@@ -5,34 +5,22 @@
 {% block content %}
 <h1>{{ assassin.user.first_name }} {{ assassin.user.last_name }} ({{ assassin.user.username }})</h1>
 
-<!--<div class="user_photo">-->
-<!--    {% if assassin.picture %}-->
-<!--    <img src="{{ MEDIA_URL }}{{ assassin.picture }}" alt="{{ assassin.user.username }}" width="240" height="240" />-->
-<!--    {% else %}-->
-<!--        <img src="" alt="" width="240" height="240" />-->
-<!--    {% endif %}-->
-<!--</div>-->
-
-{% if form %}
-<div class="secure">
-    <!--<form method="post" action="." enctype="multipart/form-data">-->
-    <!--    {% csrf_token %}-->
-    <!--    <table>-->
-    <!--    {{ form.as_table }}-->
-    <!--    </table>-->
-    <!--    <input type="submit" value="Submit" /> -->
-    <!--</form>-->
-
-    <a class="button" href="{% url 'password_change' %}">Change password</a>
+<div class="user_photo">
+    {% if assassin.user.columbiauserprofile.facebook_id %}
+    <img src="https://graph.facebook.com/{{ assassin.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ assassin.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ assassin.user.username }}" />
+    {% endif %}
 </div>
-{% endif %}
 
 <table class="vertical">
     {% if assassin.squad %}
     <tr>
         <th>Squad:</th>
         <td>
+            {% if assassin.squad %}
             <a href="{% url 'squad_details' game=game.name squad=assassin.squad.id %}">{{ assassin.squad.name }}</a>
+            {% else %}
+            None
+            {% endif %}
         </td>
     </tr>
     {% endif %}
@@ -52,10 +40,10 @@
         <th>Email:</th>
         <td>{{ assassin.user.email }}</td>
     </tr>
-    <tr>
-        <th>Address:</th>
-        <td>{{ assassin.user.columbiauserprofile.address }}</td>
-    <tr>
+    <!--<tr>-->
+    <!--    <th>Address:</th>-->
+    <!--    <td>{{ assassin.user.columbiauserprofile.address }}</td>-->
+    <!--<tr>-->
         <th>Status:</th>
         <td>{{ assassin.status_string }}</td>
     </tr>

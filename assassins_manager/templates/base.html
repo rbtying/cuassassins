@@ -12,6 +12,7 @@
 
         <link rel="stylesheet" href="{{ STATIC_URL }}assassins_manager/css/normalize.min.css">
         <link rel="stylesheet" href="{{ STATIC_URL }}assassins_manager/css/main.css">
+        <link href="{{ STATIC_URL }}css/facebook.css" type="text/css" rel="stylesheet" media="all" />
 
         <script src="{{ STATIC_URL }}assassins_manager/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
@@ -32,10 +33,10 @@
                 </ul>
             </li>
             {% if game_current %}
+            <li><a href="{% url 'assassin_details' game=game_current.name username=user.username %}">Assassin Profile</a></li>
             <li><a href="#">Squad</a>
                 <ul>
                     {% if squad_current %}
-                    <li><a href="{% url 'assassin_details' game=game_current.name username=user.username %}">Assassin Profile</a></li>
                     <li><a href="{% url 'squad_details' game=game_current.name squad=squad_current.id %}">Details</a></li>
                     <li><a href="{% url 'my_contracts' game=game_current.name %}">Contracts</a></li>
                     <li><a href="{% url 'report_kill' game=game_current.name %}">Report Kill</a></li>
@@ -50,12 +51,10 @@
         </ul>
         <ul class="login">
             {% if user.is_authenticated %}
-                <li>Welcome, {{ user.first_name }}</li>
-                <li><a href="{% url 'password_change' %}">Change Password</a></li>
-                <li><a href="{% url 'logout' %}">Log out</a></li>
+                {% if user.first_name %}<li>Welcome, {{ user.first_name }}</li>{% endif %}
+                <li><a href="{% url 'auth_logout' %}">Log out</a></li>
             {% else %}
-                <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
-                <li><a href="{% url 'login' %}">Log in</a></li>
+                <li><a href="{% url 'auth_login' %}">Log in</a></li>
             {% endif %}
         </ul>
         </header>
@@ -70,5 +69,6 @@
 
         <script src="{{ STATIC_URL }}assassins_manager/js/plugins.js"></script>
         <script src="{{ STATIC_URL }}assassins_manager/js/main.js"></script>
+        {% include 'django_facebook/_facebook_js.html' %}
     </body>
 </html>

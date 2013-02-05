@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Robert Ying', 'rbtying@aeturnalus.com')
+    ('Robert Ying', 'ry2242@columbia.edu')
 )
 
 MANAGERS = ADMINS
@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'assassins_manager',
     'columbia_util',
+    'django_facebook',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -156,13 +157,24 @@ import django.conf.global_settings as DEFAULT_SETTINGS
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
             'assassins_manager.context_processor.header_processor',
+            'django_facebook.context_processors.facebook',
+        )
+
+AUTHENTICATION_BACKENDS = DEFAULT_SETTINGS.AUTHENTICATION_BACKENDS + (
+            'django_facebook.auth_backends.FacebookBackend',
         )
 
 AUTH_USER_MODEL = "auth.User"
+AUTH_PROFILE_MODULE = 'columbia_util.ColumbiaUserProfile'
 LOGIN_REDIRECT_URL = "/g/"
 LOGIN_URL = '/accounts/login/'
 SERVER_EMAIL = 'escserver@columbiaesc.com'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 try:
     LOCAL_SETTINGS

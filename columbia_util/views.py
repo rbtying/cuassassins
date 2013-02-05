@@ -13,7 +13,7 @@ def register(request):
             return login(request)
     else:
         form = ColumbiaUserCreationForm()
-    return render_to_response('user/register.html', {'form': form},
+    return render_to_response('registration/register.html', {'form': form},
             context_instance=RequestContext(request))
 
 def post_login(sender, user, **kwargs):

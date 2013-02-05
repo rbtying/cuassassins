@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Connect to Facebook{% endblock %}
+
+{% block content %}
+<h1>Facebook</h1>
+	{% if request.GET.fb_error_or_cancel or request.GET.error %}
+		<div class="error">
+			Please click allow in the Facebook interface to access CU Assassins
+		</div>
+    {% endif %}
+    
+    {% if not request.user.is_authenticated %}
+        <!--form to call registration via facebook -->
+        <form action="{% url 'facebook_connect' %}?facebook_login=1" method="post">
+            {% csrf_token %} 
+            <input type="hidden" value="{{ request.path }}" name="next" />
+            
+            <!--
+            use error next for a seperate error page
+            <input type="hidden" value="/error/" name="error_next" />
+            -->
+            <div id="facebook_login_js">
+                <a href="javascript:void(0)" class="button" onclick="F.connect(this.parentNode.parentNode); return false;">Connect to Facebook</a>
+            </div>
+        </form>
+        
+        <p>Please click the link above to connect your Facebook Account with CU Assassins</p>
+    {% endif %}
+{% endblock %}

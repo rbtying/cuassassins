@@ -17,7 +17,9 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    url(r'^facebook/', include('django_facebook.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('columbia_util.urls')),
-    url(r'^g/', include('assassins_manager.urls')),
+    # url(r'^accounts/', include('columbia_util.urls')),
+    url(r'^accounts/', include('django_facebook.auth_urls')),
+    url(r'^', include('assassins_manager.urls')),
 )
