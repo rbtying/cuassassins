@@ -18,7 +18,7 @@ def assassin_life_signal_handler(sender, changed, status, **kwargs):
     if changed:
         if sender.alive:
             msg = 'You have been brought to life in %s' % sender.game.name
-        send('Resurrection', msg, sender.user.email)
+        send('Resurrection', msg, (sender.user.email,))
 
 @receiver(assassin_role_signal)
 def assassin_role_signal_handler(sender, changed, role, **kwargs):
@@ -26,13 +26,13 @@ def assassin_role_signal_handler(sender, changed, role, **kwargs):
     if changed:
         if sender.role == AssassinType.POLICE:
             msg = 'You have been made a policeman in %s' % sender.game.name
-            send('Police Notice', msg, sender.user.email)
+            send('Police Notice', msg, (sender.user.email,))
         elif sender.role == AssassinType.REGULAR:
             msg = 'You have been reset to regular status in %s' % sender.game.name
-            send('Status Notice', msg, sender.user.email)
+            send('Status Notice', msg, (sender.user.email,))
         elif sender.role == AssassinType.DISAVOWED:
             msg = 'You have been disavowed in %s' % sender.game.name
-            send('Disavowal Notice', msg, sender.user.email)
+            send('Disavowal Notice', msg, (sender.user.email,))
 
 @receiver(squad_life_signal)
 def squad_life_signal_handler(sender, changed, status, **kwargs):
@@ -98,4 +98,4 @@ def kill_signal_handler(sender, **kwargs):
 
     msg += "\nThe kill report: " + sender.report
         
-    send('Kill Report', msg, sender.corpse.user.email)
+    send('Kill Report', msg, (sender.corpse.user.email,))
