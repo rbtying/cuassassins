@@ -2,6 +2,7 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_delete, post_save
 from models import *
 from signals import *
+import signal_handlers_email
 
 @receiver(assassin_life_signal)
 def assassin_life_signal_handler(sender, changed, status, **kwargs):

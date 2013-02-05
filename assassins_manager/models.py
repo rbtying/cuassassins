@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
-import signal_handlers
 from signals import *
 
 # Create your models here.
@@ -476,3 +475,4 @@ def squad_pre_delete(sender, instance, **kwargs):
     for assassin in instance.members():
         assassin.squad = None
 
+import signal_handlers
