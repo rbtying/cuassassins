@@ -21,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^accounts/', include('columbia_util.urls')),
     url(r'^accounts/', include('django_facebook.auth_urls')),
+    url(r'^phone/', include('twilio_integration.urls')),
     url(r'^', include('assassins_manager.urls')),
 )

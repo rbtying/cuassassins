@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'assassins_manager',
+    'twilio_integration',
     'columbia_util',
     'django_facebook',
     # Uncomment the next line to enable the admin:

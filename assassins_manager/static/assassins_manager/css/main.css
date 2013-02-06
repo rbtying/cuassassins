@@ -113,7 +113,7 @@ a:hover {
 }
 
 #wrapper {
-    width: 860px;
+    width: 960px;
     margin: 0 auto;
 }
 
@@ -190,7 +190,7 @@ header ul li:hover ul a:hover {
 
 #content {
     padding: 30px;
-    width: 800px;
+    width: 900px;
     background: rgba(52,56,56,0.97);/*#343838;*/
     float: left;
     position: relative;
