@@ -1,8 +1,9 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete, post_save
 from models import *
-from signals import *
-from settings import send_text
+from assassins_manager.signals import *
+from assassins_manager.models import *
+from services import send_text
 from django.conf import settings
 
 prefix = '[CU Assassins] '
@@ -11,11 +12,14 @@ def send(user, msg):
     """ Helper method to send texts """
     number = find_number(user)
     if not number is None:
-        send_text(number, prefix + msg)
+        send_text(number, prefix + msg, False)
 
-def find_number(user):
+def find_number(assassin):
     """ Finds the number of a user or None """
-    p = user.phonenumber
+    try:
+        p = PhoneNumber.objects.get(user=assassin.user)
+    except PhoneNumber.DoesNotExist:
+        return None
     if p is None:
         return None
     elif not p.is_verified:
