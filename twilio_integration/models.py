@@ -37,3 +37,5 @@ def createPhoneNumber(sender, instance, created, **kwargs):
 def deletePhoneNumber(sender, instance, **kwargs):
     if not instance.phonenumber is None:
         instance.phonenumber.delete()
+
+import signal_handles_text
