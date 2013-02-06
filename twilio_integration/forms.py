@@ -11,8 +11,11 @@ class EditPhone(forms.ModelForm):
             min_number = re.sub(r'\D', '', number)
             if min_number != number:
                 raise forms.ValidationError('Please enter only numbers')
-            else:
-                return number
+            
+            if len(min_number) != 10:
+                raise forms.ValidationError('Please include the area code: 10 digits total')
+
+            return number
         else:
             raise forms.ValidationError('Please enter a phone number')
             
