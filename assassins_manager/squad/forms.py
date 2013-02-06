@@ -85,6 +85,8 @@ class JoinForm(forms.Form):
         if not self.assassin.squad is None:
             raise forms.ValidationError('You are already in a squad')
         squad = self.cleaned_data.get('squad')
+        if squad is None:
+            raise forms.ValidationError('Please pick a squad')
         if not squad.public:
             if self.cleaned_data.get('code').strip().lower() != squad.code.lower():
                 raise forms.ValidationError('Please enter the correct join code')
