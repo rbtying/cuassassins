@@ -11,6 +11,8 @@
 {% endif %}
 {% if report.corpse.user.columbiauserprofile.facebook_id %}
 <img class="corpse" src="https://graph.facebook.com/{{ report.corpse.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.corpse.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.corpse.user.username }}" />
+<h3 class="killer-title">Killer</h3>
+<h3 class="corpse-title">Corpse</h3>
 {% endif %}
 </div>
 <table class="vertical">

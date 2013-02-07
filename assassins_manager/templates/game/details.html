@@ -5,6 +5,7 @@
 {% block content %}
 <h1>{{ game.name }}</h1>
 
+{% block extra %}{% endblock %}
 <div class="secure">
 {% if user.is_authenticated and user.is_active %}
 {% if not squad_current %}
@@ -28,6 +29,5 @@
     <tr><th>Police:</th><td><a href="{% url 'game_police_list' game=game.name %}">List</a></td></tr>
     <tr><th>Disavowed:</th><td><a href="{% url 'game_disavowed_list' game=game.name %}">List</a></td></tr>
 </table>
-{% block extra %}{% endblock %}
 
 {% endblock %}

@@ -32,7 +32,7 @@ def assassin_life_signal_handler(sender, changed, status, **kwargs):
     if changed:
         if sender.alive:
             msg = 'You have been brought to life in %s' % sender.game.name
-        send(sender, msg)
+            send(sender, msg)
 
 @receiver(assassin_role_signal)
 def assassin_role_signal_handler(sender, changed, role, **kwargs):
@@ -76,10 +76,13 @@ def game_signal_handler(sender, changed, status, **kwargs):
         if sender.status == GameStatus.IN_PROGRESS:
             msg = '%s has begun! Look for your targets and eliminate them!' % sender.name
         elif sender.status == GameStatus.COMPLETE:
-            msg= '%s has ended. Contact the game administrator for awards.' % sender.name
+            msg = '%s has ended. Contact the game administrator for awards.' % sender.name
+        else:
+            msg = None
 
-    for member in sender.players():
-        send(member, msg)
+        if msg:
+            for member in sender.players():
+                send(member, msg)
 
 @receiver(contract_status_signal)
 def contract_status_signal_handler(sender, changed, status, **kwargs):
@@ -92,11 +95,11 @@ def contract_status_signal_handler(sender, changed, status, **kwargs):
 
 @receiver(kill_signal)
 def kill_signal_handler(sender, **kwargs):
-    if sender.corpse.role == AssassinType.Police:
+    if sender.corpse.role == AssassinType.POLICE:
         msg = 'You have been incapacitated by ' + sender.killer.first_name + ' ' + sender.killer.last_name + '. You will be resurrected at ' + sender.corpse.deadline + '.'
     else:
         msg = 'You have been killed by %s. Better luck next time!'
 
     msg += "\nThe kill report: " + sender.report
 
-    send(sender.corpse.user, msg)
+    send(sender.corpse, msg)

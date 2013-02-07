@@ -10,7 +10,7 @@ class KillForm(forms.Form):
         self.squad = self.assassin.squad
         self.game = self.assassin.game
 
-        qset = Assassin.objects.filter(game=self.game, alive=True).exclude(id=self.assassin.id).order_by('squad')
+        qset = self.game.players().exclude(id=self.assassin.id)
         
         self.fields['corpse'] = forms.ModelChoiceField(queryset=qset)
         self.fields['lifecode'] = forms.CharField(max_length=10)
@@ -35,6 +35,8 @@ class KillForm(forms.Form):
     def clean(self):
         corpse = self.cleaned_data.get('corpse')
         lifecode = self.cleaned_data.get('lifecode')
+        if not corpse:
+            raise forms.ValidationError('Who did you kill?')
         if not lifecode is None:
             lifecode = lifecode.strip().lower()
         corpsecode = corpse.lifecode
