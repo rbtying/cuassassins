@@ -5,7 +5,7 @@ class AddGameForm(forms.ModelForm):
     """ Form to add a game """
     class Meta:
         model=Game
-        fields=('name', 'squadsize', 'disavowed_time', 'police_resurrect_time',)
+        fields=('name', 'squadsize', 'disavowed_time', 'police_resurrect_time', 'code',)
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -14,6 +14,14 @@ class AddGameForm(forms.ModelForm):
         except:
             return name
         raise forms.ValidationError('Game name already in use')
+
+    def clean_code(self):
+        code = self.cleaned_data.get('code')
+        import re
+        cleaned = re.sub(r'\W+', '', code)
+        if cleaned == code and len(code) > 0 and len(code) < 10:
+            return cleaned
+        raise forms.ValidationError('Code should be alphanumeric characters only, between 1 and 10 characters')
 
 class VerifyForm(forms.Form):
     """ Form to make sure admin is OK with moving forward """

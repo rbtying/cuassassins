@@ -12,6 +12,7 @@ class AddForm(forms.ModelForm):
         self.assassin = kwargs.pop('assassin', None)
         super(AddForm, self).__init__(*args, **kwargs)
         self.game = self.assassin.game
+        self.fields['code'].required = False
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -33,6 +34,14 @@ class AddForm(forms.ModelForm):
             raise forms.ValidationError('Registration is not open at this time')
         if not self.assassin.squad is None:
             raise forms.ValidationError('You are already in a squad')
+        if not self.cleaned_data.get('public'):
+            code = self.cleaned_data.get('code');
+            import re
+            cleaned = re.sub(r'\W+', '', code)
+            if not code == cleaned or len(code) == 0:
+                raise forms.ValidationError('Please enter an alphanumeric join code, or make your squad public')
+            if len(code) > 10:
+                raise forms.ValidationError('The squad code must be less than 10 characters long')
         return self.cleaned_data
 
     def save(self, commit=True):
@@ -40,14 +49,13 @@ class AddForm(forms.ModelForm):
         squad.set_life(True, False)
         squad.kills = 0
         squad.game = self.game
-        squad.generateCode()
         if commit:
             squad.save()
         return squad
         
     class Meta:
         model=Squad
-        fields = ('gamecode', 'name', 'public', )
+        fields = ('gamecode', 'name', 'public', 'code',)
 
 class LeaveForm(forms.Form):
     """ Checks if the user really wants to leave """

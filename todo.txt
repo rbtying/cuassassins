@@ -1,3 +1,4 @@
-4. integration w/ sendgrid?
-5. finish up templating
+4. text to kill
+5. enter custom passwords
 6. information pages
+7. header image

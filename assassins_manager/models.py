@@ -455,8 +455,8 @@ def game_pre_delete(sender, instance, **kwargs):
 @receiver(post_save, sender=Game)
 def game_post_save(sender, instance, created, **kwargs):
     """ signal handler which gets rid of empty squads when the game is saved """
-    if created:
-        instance.generateCode()
+    # if created:
+    #     instance.generateCode()
     instance.prune_squads()
 
 @receiver(post_save, sender=Squad)
