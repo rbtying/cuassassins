@@ -249,7 +249,7 @@ class Game(models.Model):
             squad.set_life(True, False)
             squad.save()
 
-        for assassin in self.assassin_set.all():
+        for assassin in self.players():
             assassin.resurrect()
             assassin.kills = 0
             if assassin.role == AssassinType.DISAVOWED:
