@@ -13,6 +13,11 @@
 
 {% block content %}
 <h1>Kill Report</h1>
+<div id="game-icon">
+    <img class="icon left" src="{{ STATIC_URL }}assassins_manager/img/kill_icon_blue.png" />
+    <img class="icon right" src="{{ STATIC_URL }}assassins_manager/img/kill_icon_blue.png" />
+</div>
+
 <div class="killpicture">
 {% if report.killer.user.columbiauserprofile.facebook_id %}
 <img class="killer" src="https://graph.facebook.com/{{ report.killer.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.killer.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.killer.user.username }}" />

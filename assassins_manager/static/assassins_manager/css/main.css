@@ -262,6 +262,26 @@ a.button {
 }
 
 /* pictures */
+.icon {
+    height: 72px;
+    width: 72px;
+}
+#game-icon {
+    position: absolute;
+    height: 72px;
+    width: 100%;
+    margin-left: -30px;
+    margin-top: -84px;
+}
+#game-icon .left {
+    float: left;
+    margin-left: 200px;
+}
+#game-icon .right {
+    float: right;
+    margin-right: 200px;
+}
+
 .user_photo img {
     margin: 0 auto;
     display: block;
