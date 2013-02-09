@@ -145,7 +145,6 @@ header ul.login {
     float: right;
     margin-right: 40px;
 }
-
 header ul li {
     display: inline;
     height: 32px;
@@ -188,6 +187,18 @@ header ul li:hover ul a:hover {
     text-decoration: underline;
 }
 
+#header-img {
+    height: 203px;
+    width: 860px;
+    margin: -30px -30px 0 -30px;
+    background: url('../img/header.png') no-repeat center;
+    border-bottom: 1px solid #005f6b;
+}
+#header-img img {
+    height: 100%;
+    width: 100%;
+}
+
 #content {
     padding: 30px;
     width: 800px;
@@ -197,6 +208,15 @@ header ul li:hover ul a:hover {
     margin-top: 100px;
     margin-bottom: 100px;
     box-shadow: 0px 0px 5px #000;
+}
+#footer {
+    border-top: 1px solid #005f6b;
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: 80%;
+}
+#footer p {
+    margin: 0;
 }
 
 #content h1,
