@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from assassins_manager.models import *
 from assassins_manager.services import render_with_metadata, get_game
 from assassins_manager.kill.forms import *
+from django_facebook import api
 
 def process_contract(game, contract, corpse): 
     print ('processing contract\n')
@@ -123,6 +124,11 @@ def report_kill(request, game):
             k.game = game_obj
             k.save()
             k.send_signal()
+
+            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+            if fb:
+                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.report.views.killreport', args=(game_obj.name, k.id, ))
+                result = fb.set('me/cuassassins:made', kill=url)
             
             assassin_obj = game_obj.getAssassin(request.user)
 

@@ -172,6 +172,8 @@ LOGIN_URL = '/accounts/login/'
 SERVER_EMAIL = 'escserver@columbiaesc.com'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
+FACEBOOK_DEFAULT_SCOPE = [ 'email', 'publish_actions' ]
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:

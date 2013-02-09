@@ -37,8 +37,12 @@ def killreport(request, game, report):
         report = KillReport.objects.get(game=game_obj, id=report)
     except KillReport.DoesNotExist:
         raise Http404
+
+    app_id = settings.FACEBOOK_APP_ID
+
     return render_with_metadata(request, 'report/detail.html', game, {
         'report': report,
+        'app_id': app_id,
         })
 
 def playerkills(request, game, username):

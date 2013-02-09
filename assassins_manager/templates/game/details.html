@@ -2,14 +2,13 @@
 
 {% block title %}{{ game.name }}{% endblock %}
 
-{% block prefix %}prefix="og: http://ogp.me/ns/fb# cuassassins:
-http://ogp.me/ns/fb/cuassassins#"{% endblock %}
+{% block prefix %}prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# cuassassins: http://ogp.me/ns/fb/cuassassins#"{% endblock %}
 {% block head_extra %}
 <meta property="fb:app_id" content="{{ app_id }}" />
 <meta property="og:type" content="cuassassins:game" />
 <meta property="og:url" content="http://assassins.columbiaesc.com{% url 'game_details' game=game.name%}" />
 <meta property="og:title" content="{{ game.name }}" />
-<meta property="og:image" content="{{ MEDIA_URL }}/assassins_manager/img/game_icon.png" />
+<meta property="og:image" content="http://assassins.columbiaesc.com{{ STATIC_URL }}assassins_manager/img/game_icon.png" />
 {% endblock %}
 
 {% block content %}

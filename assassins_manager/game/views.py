@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
 from assassins_manager.models import *
 from assassins_manager.services import render_with_metadata, get_game
+from django_facebook import api
 
 from forms import *
 
@@ -153,6 +154,11 @@ def create_game(request):
             assassin_obj.game = game_obj
             assassin_obj.resurrect(commit=False)
             assassin_obj.save()
+
+            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+            if fb:
+                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
+                result = fb.set('me/cuassassins:create', game=url)
             return HttpResponseRedirect(reverse('assassins_manager.game.views.game_admin', args=(game_obj.name,)))
     else:
         form = AddGameForm()
@@ -191,6 +197,10 @@ def start_game(request, game):
             if form.is_valid():
                 if form.cleaned_data.get('are_you_sure'):
                     game_obj.start_game() # calls save internally
+                    fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                    if fb:
+                        url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
+                        result = fb.set('me/cuassassins:start', game=url)
                     return HttpResponseRedirect(reverse('assassins_manager.game.views.game_admin', args=(game,)))
         else:
             form = VerifyForm()

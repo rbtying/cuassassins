@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block prefix %}prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# cuassassins: http://ogp.me/ns/fb/cuassassins#"{% endblock %}
+{% block head_extra %}
+<meta property="fb:app_id" content="{{ app_id }}" />
+<meta property="og:type" content="cuassassins:squad" />
+<meta property="og:url" content="http://assassins.columbiaesc.com{% url 'squad_details' game=game.name squad=squad.id %}" />
+<meta property="og:title" content="{{ squad.name }}" />
+<meta property="og:image" content="http://assassins.columbiaesc.com{{ STATIC_URL }}assassins_manager/img/squad_icon.png" />
+{% endblock %}
+
 {% block title %}Squad Details: {{ squad.name }}{% endblock %}
 
 {% block content %}
