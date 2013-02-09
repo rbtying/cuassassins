@@ -4,6 +4,10 @@
 
 {% block content %}
 <h1>Games</h1>
+<div id="game-icon">
+    <img class="icon left" src="{{ STATIC_URL }}assassins_manager/static/img/game_logo.png" />
+    <img class="icon right" src="{{ STATIC_URL }}assassins_manager/static/img/game_logo.png" />
+</div>
 
 <div class="game_create">
     <a class="button" href="{% url 'game_create' %}">Create Game</a>
