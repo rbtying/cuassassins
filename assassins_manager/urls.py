@@ -6,6 +6,9 @@ admin.autodiscover()
 urlpatterns = patterns('assassins_manager.services',
         url(r'^cron/$', 'game_cron'),
     )
+urlpatterns += patterns('assassins_manager.views',
+        url(r'^info/$', 'about', name='about'),
+    )
 urlpatterns += patterns('assassins_manager.game.views',
         url(r'^(?P<game>.+)/details/$', 'details', name='game_details'),
         url(r'^(?P<game>.+)/scoreboard/$', 'scoreboard', name='game_scoreboard'),

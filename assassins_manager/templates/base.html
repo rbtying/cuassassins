@@ -20,6 +20,7 @@
     <body>
         <header>
         <ul class="navigation">
+            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% if game_current %}{% url 'game_details' game=game_current.name %}{% else %}{% url 'game_list' %}{% endif %}">Game</a>
                 <ul>
                     <li>
