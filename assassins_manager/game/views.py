@@ -117,8 +117,10 @@ def scoreboard(request, game):
 def details(request, game):
     """ Shows general game details """
     game_obj = get_game(game)
+    app_id = settings.FACEBOOK_APP_ID
 
-    return render_with_metadata(request, 'game/details.html', game)
+    return render_with_metadata(request, 'game/details.html', game, { 'app_id':
+        app_id, })
 
 def gamelist(request, page_length=25):
     """ Shows a list of all games, ordered by status """
