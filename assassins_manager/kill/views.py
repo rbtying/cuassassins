@@ -125,10 +125,13 @@ def report_kill(request, game):
             k.save()
             k.send_signal()
 
-            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
-            if fb:
-                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.report.views.killreport', args=(game_obj.name, k.id, ))
-                result = fb.set('me/cuassassins:made', kill=url)
+            try:
+                fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                if fb:
+                    url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.report.views.killreport', args=(game_obj.name, k.id, ))
+                    result = fb.set('me/cuassassins:made', kill=url)
+            except:
+                pass
             
             assassin_obj = game_obj.getAssassin(request.user)
 

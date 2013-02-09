@@ -155,10 +155,13 @@ def create_game(request):
             assassin_obj.resurrect(commit=False)
             assassin_obj.save()
 
-            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
-            if fb:
-                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
-                result = fb.set('me/cuassassins:create', game=url)
+            try:
+                fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                if fb:
+                    url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
+                    result = fb.set('me/cuassassins:create', game=url)
+            except:
+                pass
             return HttpResponseRedirect(reverse('assassins_manager.game.views.game_admin', args=(game_obj.name,)))
     else:
         form = AddGameForm()
@@ -197,10 +200,13 @@ def start_game(request, game):
             if form.is_valid():
                 if form.cleaned_data.get('are_you_sure'):
                     game_obj.start_game() # calls save internally
-                    fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
-                    if fb:
-                        url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
-                        result = fb.set('me/cuassassins:start', game=url)
+                    try:
+                        fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                        if fb:
+                            url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.game.views.details', args=(game_obj.name,))
+                            result = fb.set('me/cuassassins:start', game=url)
+                    except:
+                        pass
                     return HttpResponseRedirect(reverse('assassins_manager.game.views.game_admin', args=(game,)))
         else:
             form = VerifyForm()

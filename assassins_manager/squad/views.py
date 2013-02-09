@@ -22,10 +22,13 @@ def add_squad(request, game):
         if form.is_valid():
             squad = form.save()
             squad.add_assassin(assassin_obj, commit=True)
-            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
-            if fb:
-                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.squad.views.details', args=(game_obj.name, squad.id, ))
-                result = fb.set('me/cuassassins:create', squad=url)
+            try:
+                fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                if fb:
+                    url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.squad.views.details', args=(game_obj.name, squad.id, ))
+                    result = fb.set('me/cuassassins:create', squad=url)
+            except:
+                pass
             return HttpResponseRedirect(reverse('assassins_manager.squad.views.details', args=(game, squad.id,)))
     else:
         form = AddForm(assassin=assassin_obj)
@@ -48,10 +51,13 @@ def join_squad(request, game):
         if form.is_valid():
             squad = form.cleaned_data.get('squad')
             squad.add_assassin(assassin_obj, commit=True)
-            fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
-            if fb:
-                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.squad.views.details', args=(game_obj.name, squad.id, ))
-                result = fb.set('me/cuassassins:join', squad=url)
+            try:
+                fb = api.get_persistent_graph(request, access_token=request.user.columbiauserprofile.access_token)
+                if fb:
+                    url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.squad.views.details', args=(game_obj.name, squad.id, ))
+                    result = fb.set('me/cuassassins:join', squad=url)
+            except:
+                pass
             return HttpResponseRedirect(reverse('assassins_manager.squad.views.details', args=(game, squad.id,)))
     else:
         form = JoinForm(assassin=assassin_obj)
