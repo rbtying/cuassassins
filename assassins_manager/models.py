@@ -56,6 +56,12 @@ class Assassin(models.Model):
         if commit:
             self.save()
 
+    def is_police(self):
+        return self.role == AssassinType.POLICE
+
+    def is_disavowed(self):
+        return self.role == AssassinType.DISAVOWED
+
     def resurrect(self, commit=True):
         """ Brings the assassin to life """
         self.set_life(life=True, commit=False)

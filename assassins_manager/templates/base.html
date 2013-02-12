@@ -43,6 +43,14 @@
                 </ul>
             </li>
             {% if game_current %}
+            {% if assassin_current.is_police %}
+            <li><a href="#">Police</a>
+                <ul>
+                    <li><a href="{% url 'report_kill' game=game_current.name %}">Report Kill</a></li>
+                </ul>
+            </li>
+
+            {% else %}
             <li><a href="#">Squad</a>
                 <ul>
                     {% if squad_current %}
@@ -56,6 +64,7 @@
                     {% endif %}
                 </ul>
             </li>
+            {% endif %}
             {% endif %}
         </ul>
         <ul class="login">

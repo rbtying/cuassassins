@@ -54,6 +54,10 @@ class KillForm(forms.Form):
             if self.assassin.role == AssassinType.POLICE:
                 if not corpse.assassin.role == AssassinType.DISAVOWED:
                     raise forms.ValidationError('Police may only kill disavowed players')
+                else:
+                    self.cleaned_data['type'] = ReportType.SANCTIONED_KILL
+                    self.cleaned_data['contract'] = None
+                    return self.cleaned_data
 
             forward = False
             try:
