@@ -20,7 +20,7 @@
     <body>
         <header>
         <ul class="navigation">
-            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'about' %}">Rules</a></li>
             <li><a href="{% if game_current %}{% url 'game_details' game=game_current.name %}{% else %}{% url 'game_list' %}{% endif %}">Game</a>
                 <ul>
                     <li>
@@ -84,6 +84,7 @@
                 <div id="header-img"></div>
                 {% block content %}{% endblock %}
                 <div id="footer">
+                    <p>Disputes? Email <a href="mailto:dispute@assassins.columbiaesc.com">dispute@assassins.columbiaesc.com</a> and we'll get back to you as soon as possible. Except in extraordinary cases, be aware that we will <strong>not</strong> resurrect players as a result of disputes</p><br />
                     <p>Developed by <a href="http://github.com/rbtying/">Robert Ying</a> for the Columbia University Engineering Student Council. Copyright &copy; 2013, All Rights Reserved.</p>
                 </div>
             </div>

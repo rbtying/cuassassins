@@ -18,19 +18,38 @@
     <img class="icon right" src="{{ STATIC_URL }}assassins_manager/img/game_icon_blue.png" />
 </div>
 
+<table>
+<tr><th>Welcome to CU Assassins!</tr></th>
+<tr>
+    <td>
+        {% if assassin_current.in_game %}
+            {% if not squad_current and not assassin_current.is_police %}
+                I see that you have not yet joined a squad! Please either join or create a squad below; if you do not, you will not be able to participate in the game.
+            {% else %}
+                Have fun assassinating your targets!
+            {% endif %}
+        {% else %}
+            If you would like to play in this game, click the "Join Game" button below
+        {% endif %}
+    </td>
+</tr>
+</table>
+
 {% block extra %}{% endblock %}
 <div class="secure">
 {% if user.is_authenticated and user.is_active %}
-{% if assassin_current.in_game %}
-{% if not squad_current %}
-<a class="button" href="{% url 'squad_add' game=game_current.name %}">Create Squad</a>
-<a class="button" href="{% url 'squad_join' game=game_current.name %}">Join Squad</a>
-{% else %}
-<a class="button" href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a>
-{% endif %}
-{% else %}
-<a class="button" href="{% url 'game_join' game=game_current.name %}">Join Game</a>
-{% endif %}
+    {% if assassin_current.in_game %}
+        {% if not assassin_current.is_police %}
+            {% if not squad_current %}
+                <a class="button" href="{% url 'squad_add' game=game_current.name %}">Create Squad</a>
+                <a class="button" href="{% url 'squad_join' game=game_current.name %}">Join Squad</a>
+            {% else %}
+                <a class="button" href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a>
+            {% endif %}
+        {% endif %}
+    {% else %}
+    <a class="button" href="{% url 'game_join' game=game_current.name %}">Join Game</a>
+    {% endif %}
 {% else %}
 <a class="button" href="{% url 'auth_login' %}">Log in to join the game</a>
 {% endif %}
