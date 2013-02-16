@@ -11,6 +11,8 @@ urlpatterns += patterns('assassins_manager.views',
     )
 urlpatterns += patterns('assassins_manager.game.views',
         url(r'^(?P<game>.+)/details/$', 'details', name='game_details'),
+        url(r'^(?P<game>.+)/join/$', 'join_game', name='game_join'),
+        url(r'^(?P<game>.+)/leave/$', 'leave_game', name='game_leave'),
         url(r'^(?P<game>.+)/scoreboard/$', 'scoreboard', name='game_scoreboard'),
         url(r'^(?P<game>.+)/a/$', 'assassins', name='game_assassins_list'),
         url(r'^(?P<game>.+)/p/$', 'police', name='game_police_list'),

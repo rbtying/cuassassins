@@ -20,6 +20,7 @@ class AssassinType:
     REGULAR = 0
     DISAVOWED = 1
     POLICE = 2
+    NOT_IN_GAME = 3
 
 class Assassin(models.Model):
     """ Class to keep track of assassins' pictures, status, and profile """
@@ -30,9 +31,12 @@ class Assassin(models.Model):
     kills = models.IntegerField(default=0) 
     is_admin = models.BooleanField(default=False)
 
+    nickname = models.CharField(max_length=16, default="John Doe")
+    address = models.CharField(max_length=256, default="1234 John Jay Hall")
+
     deadline = models.DateTimeField(blank=True, null=True)
 
-    role = models.IntegerField(default=AssassinType.REGULAR)
+    role = models.IntegerField(default=AssassinType.NOT_IN_GAME)
 
     squad = models.ForeignKey('Squad', null=True, blank=True)
     game = models.ForeignKey('Game')
@@ -55,6 +59,9 @@ class Assassin(models.Model):
         assassin_role_signal.send(sender=self, changed=changed, role=self.role)
         if commit:
             self.save()
+
+    def in_game(self):
+        return self.role != AssassinType.NOT_IN_GAME
 
     def is_police(self):
         return self.role == AssassinType.POLICE
@@ -166,7 +173,7 @@ class Game(models.Model):
 
     def players(self):
         """ Gets players in squads """
-        return self.assassin_set.exclude(squad=None) | self.assassin_set.filter(role=AssassinType.POLICE)
+        return self.assassin_set.exclude(squad=None, role=AssassinType.NOT_IN_GAME) | self.assassin_set.filter(role=AssassinType.POLICE)
 
     def numPlayers(self):
         """ Number of players """

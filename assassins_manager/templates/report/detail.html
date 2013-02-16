@@ -20,17 +20,17 @@
 
 <div class="killpicture">
 {% if report.killer.user.columbiauserprofile.facebook_id %}
-<img class="killer" src="https://graph.facebook.com/{{ report.killer.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.killer.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.killer.user.username }}" />
+<img class="killer" src="https://graph.facebook.com/{{ report.killer.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.killer.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.killer.nickname }}" />
 {% endif %}
 {% if report.corpse.user.columbiauserprofile.facebook_id %}
-<img class="corpse" src="https://graph.facebook.com/{{ report.corpse.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.corpse.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.corpse.user.username }}" />
+<img class="corpse" src="https://graph.facebook.com/{{ report.corpse.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.corpse.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.corpse.nickname }}" />
 <h3 class="killer-title">Killer</h3>
 <h3 class="corpse-title">Corpse</h3>
 {% endif %}
 </div>
 <table class="vertical">
-    <tr><th>Killer:</th><td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.user.username }}</a></td></tr>
-    <tr><th>Corpse:</th><td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.user.username }}</a></td></tr>
+    <tr><th>Killer:</th><td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.nickname }}</a></td></tr>
+    <tr><th>Corpse:</th><td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.nickname }}</a></td></tr>
     <tr><th>Date:</th><td>{{ report.date }}</td></tr>
     <tr><th>Type:</th><td>{{ report.type_string }}</td></tr>
     <tr><th>Report:</th><td>{{ report.report }}</td></tr>

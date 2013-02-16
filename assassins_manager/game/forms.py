@@ -23,6 +23,30 @@ class AddGameForm(forms.ModelForm):
             return cleaned
         raise forms.ValidationError('Code should be alphanumeric characters only, between 1 and 10 characters')
 
+class JoinGameForm(forms.ModelForm):
+    """ Form to join a game """
+    class Meta:
+        model=Assassin
+        fields=('nickname', 'address',)
+
+    def __init__(self, *args, **kwargs):
+        super(JoinGameForm, self).__init__(*args, **kwargs)
+        self.fields['join_code'] = forms.CharField()
+
+    def clean_join_code(self):
+        code = self.cleaned_data.get('join_code').strip().lower()
+
+        if code and code.strip().lower() == self.instance.game.code.lower():
+            return code.strip().lower()
+
+        raise forms.ValidationError('Incorrect game join code')
+
+    def save(self, commit=True):
+        assassin = super(JoinGameForm, self).save(commit=False)
+        assassin.role = AssassinType.REGULAR
+        if commit:
+            assassin.save()
+
 class VerifyForm(forms.Form):
     """ Form to make sure admin is OK with moving forward """
     are_you_sure = forms.BooleanField()

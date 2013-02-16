@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Assassin Details: {{ assassin.user.username }}{% endblock %}
+{% block title %}Assassin Details: {{ assassin.nickname }}{% endblock %}
 
 {% block content %}
-<h1>{{ assassin.user.first_name }} {{ assassin.user.last_name }} ({{ assassin.user.username }})</h1>
+<h1>{{ assassin.user.first_name }} {{ assassin.user.last_name }} ({{ assassin.nickname }})</h1>
 
 <div class="user_photo">
     {% if assassin.user.columbiauserprofile.facebook_id %}
-    <img src="https://graph.facebook.com/{{ assassin.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ assassin.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ assassin.user.username }}" />
+    <img src="https://graph.facebook.com/{{ assassin.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ assassin.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ assassin.nickname }}" />
     {% endif %}
 </div>
 
@@ -45,11 +45,11 @@
     </tr>
     <tr>
         <th>Kills:</th>
-        <td><a href="{% url 'player_kills' game=game.name username=assassin.user.username %}">{{ assassin.kills }}</a></td>
+        <td><a href="{% url 'player_kills' game=game.name username=assassin.nickname %}">{{ assassin.kills }}</a></td>
     </tr>
     <tr>
         <th>Deaths:</th>
-        <td><a href="{% url 'player_deaths' game=game.name username=assassin.user.username %}">{{ assassin.deathreports|length }}</a></td>
+        <td><a href="{% url 'player_deaths' game=game.name username=assassin.nickname %}">{{ assassin.deathreports|length }}</a></td>
     </tr>
     {% if show_lifecode or user.is_staff %}
     <tr>

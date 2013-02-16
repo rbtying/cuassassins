@@ -324,3 +324,46 @@ def remove_police(request, game):
             })
     else:
         return HttpResponseRedirect(reverse('assassins_manager.game.views.details', args=(game,)))
+
+@user_passes_test(lambda u: u.is_authenticated() and u.is_active)
+def join_game(request, game):
+    """ Joins an asssassin to the game """
+    game_obj = get_game(game)
+    assassin_obj = game_obj.getAssassin(request.user)
+
+    if request.method == 'POST':
+        form = JoinGameForm(request.POST, instance=assassin_obj)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('assassins_manager.game.views.details', args=(game,)))
+    else:
+        form = JoinGameForm(instance=assassin_obj)
+
+    return render_with_metadata(request, 'form.html', game, {
+        'form': form,
+        'formname': 'Join Game',
+        })
+
+@user_passes_test(lambda u: u.is_authenticated() and u.is_active)
+def leave_game(request, game):
+    game_obj = get_game(game)
+    if game_obj.status == GameStatus.REGISTRATION:
+        if request.method == 'POST':
+            form = VerifyForm(request.POST)
+            if form.is_valid():
+                if form.cleaned_data.get('are_you_sure'):
+                    assassin_obj = game_obj.getAssassin(request.user)
+                    if assassin_obj:
+                        if assassin_obj.squad:
+                            assassin_obj.squad.remove_assassin(assassin_obj, commit=False)
+                        assassin_obj.squad = None
+                        assassin_obj.role = AssassinType.NOT_IN_GAME
+                        assassin_obj.save()
+                    return HttpResponseRedirect(reverse('assassins_manager.game.views.details', args=(game,)))
+        else:
+            form = VerifyForm()
+        return render_with_metadata(request, 'form.html', game, {
+            'form': form,
+            'formname': 'Leave Game',
+            })
+    return HttpResponseRedirect(reverse('assassins_manager.game.views.details', args=(game,)))

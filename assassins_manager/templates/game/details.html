@@ -21,11 +21,15 @@
 {% block extra %}{% endblock %}
 <div class="secure">
 {% if user.is_authenticated and user.is_active %}
+{% if assassin_current.in_game %}
 {% if not squad_current %}
 <a class="button" href="{% url 'squad_add' game=game_current.name %}">Create Squad</a>
 <a class="button" href="{% url 'squad_join' game=game_current.name %}">Join Squad</a>
 {% else %}
 <a class="button" href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a>
+{% endif %}
+{% else %}
+<a class="button" href="{% url 'game_join' game=game_current.name %}">Join Game</a>
 {% endif %}
 {% else %}
 <a class="button" href="{% url 'auth_login' %}">Log in to join the game</a>

@@ -62,7 +62,7 @@
                 {% for member in squad.assassin_set.all %}
                 <li class="{% if member.alive %}alive{% else %}dead{% endif %}">
                     <a href="{% url 'assassin_details' game=game.name username=member.user.username %}">
-                        {{ member.user.username }} ({{ member.status_string }})
+                        {{ member.nickname }} ({{ member.status_string }})
                     </a>
                 </li>
                 {% endfor %}

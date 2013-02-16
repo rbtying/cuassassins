@@ -19,8 +19,8 @@
     <tr>
         <td><a href="{% url 'kill_report' game=game.name report=report.id %}">{{ report.date }}</a></td>
         <td>{{ report.type_string }}</td>
-        <td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.user.username }}</a></td>
-        <td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.user.username }}</a></td>
+        <td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.nickname }}</a></td>
+        <td><a href="{% url 'assassin_details' game=game.name username=report.corpse.user.username %}">{{ report.corpse.nickname }}</a></td>
     </tr>
     {% endfor %}
 </table>
