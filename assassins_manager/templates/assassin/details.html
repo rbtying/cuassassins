@@ -57,5 +57,11 @@
         <td>{{ assassin.lifecode }}</td>
     </tr>
     {% endif %}
+    {% if assassin_current.is_police %}
+    <tr>
+        <th>Address:</th>
+        <td>{{ assassin.address }}</td>
+    </tr>
+    {% endif %}
 </table>
 {% endblock %}
