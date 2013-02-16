@@ -8,7 +8,9 @@ def header_processor(request):
             game_name = request.session['game_name']
             game_obj = Game.objects.get(name=game_name)
             assassin_obj = game_obj.getAssassin(request.user)
-            squad = game_obj.getAssassin(request.user).squad
+            squad = None
+            if assassin_obj:
+                squad = assassin_obj.squad
             additional = {'select_form': select_form, 
                     'game_current': game_obj,
                     'assassin_current': assassin_obj,

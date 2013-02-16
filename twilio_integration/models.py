@@ -35,7 +35,10 @@ def createPhoneNumber(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=User)
 def deletePhoneNumber(sender, instance, **kwargs):
-    if not instance.phonenumber is None:
-        instance.phonenumber.delete()
+    try:
+        if not instance.phonenumber is None:
+            instance.phonenumber.delete()
+    except:
+        pass
 
 import signal_handlers_text

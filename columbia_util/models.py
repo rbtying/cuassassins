@@ -51,5 +51,8 @@ def createColumbiaUserProfile(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=User)
 def deleteColumbiaUserProfile(sender, instance, **kwargs):
-    if not instance.columbiauserprofile is None:
-        instance.columbiauserprofile.delete()
+    try:
+        if not instance.columbiauserprofile is None:
+            instance.columbiauserprofile.delete()
+    except:
+        pass

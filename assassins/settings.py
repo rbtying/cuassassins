@@ -174,6 +174,7 @@ SERVER_EMAIL = 'escserver@columbiaesc.com'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 FACEBOOK_DEFAULT_SCOPE = [ 'email', 'publish_actions' ]
+FACEBOOK_STORE_LOCAL_IMAGE = True
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
