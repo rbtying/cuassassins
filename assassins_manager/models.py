@@ -42,7 +42,7 @@ class Assassin(models.Model):
     game = models.ForeignKey('Game')
 
     def __unicode__(self):
-        return self.user.username
+        return self.nickname + " (" + self.user.first_name + " " + self.user.last_name + ")"
 
     def set_life(self, life, commit=True):
         """ Sets the life status of this Assassin """

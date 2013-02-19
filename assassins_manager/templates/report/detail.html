@@ -20,10 +20,10 @@
 
 <div class="killpicture">
 {% if report.killer.user.columbiauserprofile.facebook_id %}
-<img class="killer" src="https://graph.facebook.com/{{ report.killer.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.killer.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.killer.nickname }}" />
+<img class="killer" src="{{ MEDIA_URL}}{{ report.killer.user.columbiauserprofile.image }}" alt="{{ report.killer.nickname }}" />
 {% endif %}
 {% if report.corpse.user.columbiauserprofile.facebook_id %}
-<img class="corpse" src="https://graph.facebook.com/{{ report.corpse.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ report.corpse.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ report.corpse.nickname }}" />
+<img class="corpse" src="{{ MEDIA_URL}}{{ report.corpse.user.columbiauserprofile.image }}" alt="{{ report.corpse.nickname }}" />
 <h3 class="killer-title">Killer</h3>
 <h3 class="corpse-title">Corpse</h3>
 {% endif %}

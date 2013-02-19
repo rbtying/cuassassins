@@ -369,7 +369,6 @@ def _update_image(profile, image_url):
     profile_dirty = True
     return profile_dirty
 
-
 def update_connection(request, graph):
     '''
     A special purpose view for updating the connection with an existing user

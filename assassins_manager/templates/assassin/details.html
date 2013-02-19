@@ -7,7 +7,7 @@
 
 <div class="user_photo">
     {% if assassin.user.columbiauserprofile.facebook_id %}
-    <img src="https://graph.facebook.com/{{ assassin.user.columbiauserprofile.facebook_id }}/picture?type=large&access_token={{ assassin.user.columbiauserprofile.access_token }}&width=320&height=240" alt="{{ assassin.nickname }}" />
+    <img src="{{ MEDIA_URL}}{{ assassin.user.columbiauserprofile.image }}"/>
     {% endif %}
 </div>
 
