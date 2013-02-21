@@ -38,9 +38,9 @@ def details(request, game, username):
     else:
         form = AssassinEditForm(instance=assassin_obj)
 
-    show_lifecode = user == request.user or assassin_obj.squad == squad
-    if user != request.user:
-       form = None 
+    show_lifecode = user == request.user or (assassin_obj.squad == squad and assassin_obj.squad != None)
+    # if user != request.user:
+    #    form = None 
 
     return render_with_metadata(request, 'assassin/details.html', game, {
         'assassin': assassin_obj,

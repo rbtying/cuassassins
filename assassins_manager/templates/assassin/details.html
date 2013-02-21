@@ -9,6 +9,11 @@
     {% if assassin.user.columbiauserprofile.facebook_id %}
     <img src="{{ MEDIA_URL}}{{ assassin.user.columbiauserprofile.image }}"/>
     {% endif %}
+    {% if assassin_current.is_admin %}
+        <table class="vertical">
+            {{ form.as_table }}
+        </table>
+    {% endif %}
 </div>
 
 <table class="vertical">
