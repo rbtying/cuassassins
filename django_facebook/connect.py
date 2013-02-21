@@ -351,6 +351,7 @@ def _update_image(profile, image_url):
     Unfortunately this is quite a pain to get right with Django
     Suggestions to improve this are welcome
     '''
+    print 'attempting to add image'
     image_name = 'fb_image_%s.jpg' % profile.facebook_id
     image_temp = NamedTemporaryFile()
     image_response = urllib2.urlopen(image_url)

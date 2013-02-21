@@ -14,7 +14,7 @@ import os
 logger = logging.getLogger(__name__)
 
 
-PROFILE_IMAGE_PATH = os.path.join('images', 'facebook_profiles/%Y/%m/%d')
+PROFILE_IMAGE_PATH = os.path.join('images', 'facebook_profiles/')
 
 
 class FACEBOOK_OG_STATE:
