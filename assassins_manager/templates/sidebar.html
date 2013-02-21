@@ -1,0 +1,36 @@
+<ul class="navigation">
+    <li><a href="{% url 'game_list' %}">Game List</a></li>
+    <li><a href="{% url 'about' %}">Rules</a></li>
+    {% if game_current %}
+        <li><a href="{% url 'game_details' game=game_current.name %}">Details</a></li>
+        {% if assassin_current.is_admin %}
+        <li><a href="{% url 'game_admin' game=game_current.name %}">Admin</a></li>
+        {% endif %}
+    {% endif %}
+    {% if game_current %}
+        <li><a href="{% url 'assassin_details' game=game_current.name username=user.username %}">Assassin Profile</a></li>
+    {% endif %}
+        <!-- <li><a href="{% url 'edit_phone' %}">Phone Number</a></li> -->
+    {% if game_current %}
+        {% if assassin_current.in_game %}
+            {% if assassin_current.is_police or squad_current %}
+                <li><a href="{% url 'report_kill' game=game_current.name %}">Report Kill</a></li>
+            {% endif %}
+            {% if squad_current %}
+                <li><a href="{% url 'squad_details' game=game_current.name squad=squad_current.id %}">Details</a></li>
+                <li><a href="{% url 'my_contracts' game=game_current.name %}">Contracts</a></li>
+                <li><a href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a></li>
+            {% else %}
+                <li><a href="{% url 'squad_add' game=game_current.name %}">Create Squad</a></li>
+                <li><a href="{% url 'squad_join' game=game_current.name %}">Join Squad</a></li>
+            {% endif %}
+        {% else %}
+            <li><a href="{% url 'game_join' game=game_current.name %}">Join Game</a></li>
+        {% endif %}
+    {% endif %}
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'auth_logout' %}">Log out</a></li>
+    {% else %}
+        <li><a href="{% url 'auth_login' %}">Log in</a></li>
+    {% endif %}
+</ul>

@@ -18,77 +18,23 @@
         <script src="{{ STATIC_URL }}assassins_manager/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <header>
-        <ul class="navigation">
-            <li><a href="{% url 'about' %}">Rules</a></li>
-            <li><a href="{% if game_current %}{% url 'game_details' game=game_current.name %}{% else %}{% url 'game_list' %}{% endif %}">Game</a>
-                <ul>
-                    <li>
-                        <a href="{% url 'game_list' %}">Game List</a>
-                    </li>
-                {% if game_current %}
-                    <li><a href="{% url 'game_details' game=game_current.name %}">Details</a></li>
-                    {% if assassin_current.is_admin %}
-                    <li><a href="{% url 'game_admin' game=game_current.name %}">Admin</a></li>
-                    {% endif %}
-                {% endif %}
-                </ul>
-                </li>
-            <li><a href="#">Profile</a>
-                <ul>
-                {% if game_current %}
-                    <li><a href="{% url 'assassin_details' game=game_current.name username=user.username %}">Assassin Profile</a></li>
-                {% endif %}
-                    <li><a href="{% url 'edit_phone' %}">Phone Number</a></li>
-                </ul>
-            </li>
-            {% if game_current %}
-            {% if assassin_current.in_game %}
-            {% if assassin_current.is_police %}
-            <li><a href="#">Police</a>
-                <ul>
-                    <li><a href="{% url 'report_kill' game=game_current.name %}">Report Kill</a></li>
-                </ul>
-            </li>
-            {% else %}
-            <li><a href="#">Squad</a>
-                <ul>
-                    {% if squad_current %}
-                    <li><a href="{% url 'squad_details' game=game_current.name squad=squad_current.id %}">Details</a></li>
-                    <li><a href="{% url 'my_contracts' game=game_current.name %}">Contracts</a></li>
-                    <li><a href="{% url 'report_kill' game=game_current.name %}">Report Kill</a></li>
-                    <li><a href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a></li>
-                    {% else %}
-                    <li><a href="{% url 'squad_add' game=game_current.name %}">Create Squad</a></li>
-                    <li><a href="{% url 'squad_join' game=game_current.name %}">Join Squad</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-            {% endif %}
-            {% else %}
-            <li><a href="{% url 'game_join' game=game_current.name %}">Join Game</a></li>
-            {% endif %}
-            {% endif %}
-        </ul>
-        <ul class="login">
-            {% if user.is_authenticated %}
-                {% if user.first_name %}<li>Welcome, {{ user.first_name }}</li>{% endif %}
-                <li><a href="{% url 'auth_logout' %}">Log out</a></li>
-            {% else %}
-                <li><a href="{% url 'auth_login' %}">Log in</a></li>
-            {% endif %}
-        </ul>
-        </header>
-        <div id="wrapper">
-            <div id="content">
-                <div id="header-img"></div>
-                {% block content %}{% endblock %}
-                <div id="footer">
+        <section id="wrapper">
+            <header>
+                <h1>CU Assassins</h1>
+                </header>
+            <section id="middle">
+                <section id="sidebar">
+                    {% include 'sidebar.html' %}
+                </section>
+                <section id="content">
+                    {% block content %}{% endblock %}
+                </section>
+            </section>
+            <footer>
                     <p>Disputes? Email <a href="mailto:dispute@assassins.columbiaesc.com">dispute@assassins.columbiaesc.com</a> and we'll get back to you as soon as possible. Except in extraordinary cases, be aware that we will <strong>not</strong> resurrect players as a result of disputes</p><br />
                     <p>Developed by <a href="http://github.com/rbtying/">Robert Ying</a> for the Columbia University Engineering Student Council. Copyright &copy; 2013, All Rights Reserved.</p>
-                </div>
-            </div>
-        </div>
+            </footer>
+        </section>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}assassins_manager/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
