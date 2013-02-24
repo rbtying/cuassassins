@@ -31,7 +31,7 @@ class Assassin(models.Model):
     kills = models.IntegerField(default=0) 
     is_admin = models.BooleanField(default=False)
 
-    nickname = models.CharField(max_length=16, default="John Doe")
+    nickname = models.CharField(max_length=255, default="John Doe")
     address = models.CharField(max_length=256, default="1234 John Jay Hall")
 
     deadline = models.DateTimeField(blank=True, null=True)
@@ -159,7 +159,7 @@ class GameStatus:
 
 class Game(models.Model):
     """ Model to keep track of individual assassins games """
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=255)
     status = models.IntegerField(default=GameStatus.REGISTRATION)
     disavowed_time = models.IntegerField(default=72)
     police_resurrect_time = models.IntegerField(default=24)
@@ -294,7 +294,7 @@ class SquadAction:
 
 class Squad(models.Model):
     """ Model of Squad which tracks name, status, and kills """
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=255)
     alive = models.BooleanField(default=True)
     kills = models.IntegerField(default=0)
     game = models.ForeignKey(Game)
