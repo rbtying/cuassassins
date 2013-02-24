@@ -25,7 +25,7 @@ class AddForm(forms.ModelForm):
             raise forms.ValidationError('Registration is not open at this time')
         if not self.assassin.squad is None:
             raise forms.ValidationError('You are already in a squad')
-        if not self.assassin.role == AssassinType.NOT_IN_GAME:
+        if self.assassin.role == AssassinType.NOT_IN_GAME:
             raise forms.ValidationError('You need to join the game before you can create a sqaud')
         if not self.cleaned_data.get('public'):
             code = self.cleaned_data.get('code');
@@ -83,7 +83,7 @@ class JoinForm(forms.Form):
             raise forms.ValidationError('Registration is not open at this time')
         if not self.assassin.squad is None:
             raise forms.ValidationError('You are already in a squad')
-        if not self.assassin.role == AssassinType.NOT_IN_GAME:
+        if self.assassin.role == AssassinType.NOT_IN_GAME:
             raise forms.ValidationError('You need to join the game before you can create a sqaud')
         squad = self.cleaned_data.get('squad')
         if squad is None:
