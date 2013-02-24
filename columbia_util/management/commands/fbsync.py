@@ -24,7 +24,7 @@ class Command(BaseCommand):
             if user.columbiauserprofile:
                 print "updating user " + str(user)
                 profile = user.columbiauserprofile
-                url = "https://graph.facebook.com/" + str(profile.facebook_id) + "/picture?type=large&access_token=" + str(profile.access_token) + "&width=320&height=240"
+                url = "https://graph.facebook.com/" + str(profile.facebook_id) + "/picture?type=large&access_token=" + str(profile.access_token) + "&width=480&height=320"
                 update = False
                 try:
                     update =  _update_image(profile, url)

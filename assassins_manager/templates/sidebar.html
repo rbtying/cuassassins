@@ -20,7 +20,7 @@
                 <li><a href="{% url 'squad_details' game=game_current.name squad=squad_current.id %}">Details</a></li>
                 <li><a href="{% url 'my_contracts' game=game_current.name %}">Contracts</a></li>
                 <li><a href="{% url 'squad_leave' game=game_current.name %}">Leave Squad</a></li>
-            {% else %}
+            {% elif not assassin_current.is_police%}
                 <li><a href="{% url 'squad_add' game=game_current.name %}">Create Squad</a></li>
                 <li><a href="{% url 'squad_join' game=game_current.name %}">Join Squad</a></li>
             {% endif %}

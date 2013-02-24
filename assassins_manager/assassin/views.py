@@ -32,11 +32,11 @@ def details(request, game, username):
         squad = game_obj.getAssassin(request.user).squad
 
     if request.method == 'POST':
-        form = AssassinEditForm(request.POST, request.FILES, instance=assassin_obj)
+        form = AssassinEditForm(request.POST, request.FILES, instance=user.columbiauserprofile)
         if form.is_valid():
             form.save()
     else:
-        form = AssassinEditForm(instance=assassin_obj)
+        form = AssassinEditForm(instance=user.columbiauserprofile)
 
     show_lifecode = user == request.user or (assassin_obj.squad == squad and assassin_obj.squad != None)
     # if user != request.user:
