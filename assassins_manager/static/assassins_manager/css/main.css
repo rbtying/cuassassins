@@ -167,6 +167,12 @@ header h1 {
     width: 100%;
     text-align: center;
 }
+#crown {
+    height: 60px;
+    top: -17px;
+    left: 174px;
+    position: absolute;
+}
 
 /* navigation */
 #content {
