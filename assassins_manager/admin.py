@@ -14,7 +14,7 @@ class AssassinInline(admin.StackedInline):
 class SquadAdmin(admin.ModelAdmin):
     """ Admin class to handle squads """
     fieldsets = [
-            (None, {'fields': ['game', 'name', 'public', 'alive', 'kills']}), 
+            (None, {'fields': ['game', 'name', 'code', 'public', 'alive', 'kills']}), 
             ]
     inlines = [AssassinInline]
 

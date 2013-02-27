@@ -474,9 +474,10 @@ def game_post_save(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Squad)
 def squad_to_life(sender, instance, created, **kwargs):
-    """ signal handler to resurrect Assassins when they are created """
+    """ signal handler to set code if not set when they are created """
     if created:
-        instance.generateCode()
+        if not instance.code:
+            instance.generateCode()
 
 @receiver(pre_delete, sender=Squad)
 def squad_pre_delete(sender, instance, **kwargs):
