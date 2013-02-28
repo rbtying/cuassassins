@@ -55,11 +55,11 @@
     </tr>
     <tr>
         <th>Kills:</th>
-        <td><a href="{% url 'player_kills' game=game.name username=assassin.nickname %}">{{ assassin.kills }}</a></td>
+        <td><a href="{% url 'player_kills' game=game.name username=assassin.user.username %}">{{ assassin.kills }}</a></td>
     </tr>
     <tr>
         <th>Deaths:</th>
-        <td><a href="{% url 'player_deaths' game=game.name username=assassin.nickname %}">{{ assassin.deathreports|length }}</a></td>
+        <td><a href="{% url 'player_deaths' game=game.name username=assassin.user.username %}">{{ assassin.deathreports|length }}</a></td>
     </tr>
     {% if show_lifecode or user.is_staff %}
     <tr>
