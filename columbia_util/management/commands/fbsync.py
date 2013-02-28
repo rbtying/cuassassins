@@ -11,28 +11,32 @@ from django_facebook.connect import _update_image
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
             make_option('-u', '--user', action="store", type="string", dest="username", default=""),
+            make_option('-a', '--all', action="store_true", dest="all", default=False),
         )
 
     def handle(self, *args, **options):
         if not options['username'] is "":
             users = get_user_model().objects.filter(username=options['username'])
-        else:
+        elif options['all']:
             users = get_user_model().objects.all()
 
-        for user in users:
-            print "processing user " + str(user)
-            if user.columbiauserprofile:
-                print "updating user " + str(user)
-                profile = user.columbiauserprofile
-                url = "https://graph.facebook.com/" + str(profile.facebook_id) + "/picture?type=large&access_token=" + str(profile.access_token) + "&width=320&height=240"
-                update = False
-                try:
-                    update =  _update_image(profile, url)
-                except:
-                    pass
+        if users:
+            for user in users:
+                print "processing user " + str(user)
+                if user.columbiauserprofile:
+                    print "updating user " + str(user)
+                    profile = user.columbiauserprofile
+                    url = "https://graph.facebook.com/" + str(profile.facebook_id) + "/picture?type=large&access_token=" + str(profile.access_token) + "&width=320&height=240"
+                    update = False
+                    try:
+                        update =  _update_image(profile, url)
+                    except:
+                        pass
 
-                if update:
-                    profile.save()
-                    print str(user) + "'s image updated to " + str(profile.image)
-            else:
-                print str(user) + " does not have a columbiauserprofile"
+                    if update:
+                        profile.save()
+                        print str(user) + "'s image updated to " + str(profile.image)
+                else:
+                    print str(user) + " does not have a columbiauserprofile"
+        else:
+            print "Please select an option"
