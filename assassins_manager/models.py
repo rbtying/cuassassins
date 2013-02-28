@@ -315,6 +315,7 @@ class Squad(models.Model):
     def add_assassin(self, assassin, commit=True):
         """ Adds an assassin to this squad """
         assassin.squad = self
+        # assassin.role = AssassinType.REGULAR
         squad_member_signal.send(sender=self, change=SquadAction.JOINED, member=assassin)
         if commit:
             assassin.save()
@@ -323,6 +324,7 @@ class Squad(models.Model):
         """ Removes an assassin from the squad """
         if assassin.squad == self:
             assassin.squad = None
+            # assassin.role = AssassinType.NOT_IN_GAME
             squad_member_signal.send(sender=self, change=SquadAction.LEFT, member=assassin)
             if commit:
                 assassin.save()

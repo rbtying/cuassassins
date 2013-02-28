@@ -24,7 +24,7 @@
             {% for member in squad.assassin_set.all %}
             <td>
                 <a href="{% url 'assassin_details' game=game.name username=member.user.username %}">
-                    {{ member.user.username }}
+                    {{ member.nickname }}
                 </a>
             </td>
             {% endfor %}
