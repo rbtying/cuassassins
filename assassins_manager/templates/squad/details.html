@@ -40,10 +40,9 @@
     <tr>
         <th>Contracts:</th>
         <td>
-            <a href="{% url 'my_contracts' game=game.name %}">
-
+            {% if squad_current == squad %}<a href="{% url 'my_contracts' game=game.name %}">{% endif %}
                 {{ squad.active_contracts|length }} active, {{ squad.completed_contracts|length }} completed
-            </a>
+            {% if squad_current == squad %}</a>{% endif %}
         </td>
     <tr>
         <th>Status:</th>
