@@ -18,7 +18,7 @@
     {% for assassin in assassins %}
     <tr {% if not assassin.alive %}class="dead"{% endif %}>
         <td>{{ assassins.start_index|add:forloop.counter0 }}</td>
-        <td><img src="{{ MEDIA_URL }}{{ assassin.user.columbiauserprofile.image }}" width="64" style="float:left;margin-right:12px" /><a href="{% url 'assassin_details' game=game.name username=assassin.user.username %}">{{ assassin.nickname }}</a></td>
+        <td><img src="{{ MEDIA_URL }}{{ assassin.user.columbiauserprofile.image }}" width="64" style="float:left;margin-right:12px" /><a href="{% url 'assassin_details' game=game.name username=assassin.user.username %}">{% if showfbid %}{{ assassin.user.username }}{% else %}{{ assassin.nickname }}{% endif %}</a></td>
         <td>{{ assassin.status_string }}</td>
         <td><a href="{% url 'player_kills' game=game.name username=assassin.user.username %}">{{ assassin.kills }}</a></td>
         {% endfor %}

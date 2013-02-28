@@ -26,7 +26,7 @@ def police(request, game):
 
     return render_assassins_list(request, game, assassins, 'Police')
 
-def assassins(request, game):
+def assassins(request, game, page_length=25):
     """ Shows all assassins in the game, sorted by squad """
     game_obj = get_game(game)
 
@@ -37,7 +37,7 @@ def assassins(request, game):
         assassins = game_obj.players().order_by('role', '-alive', '-kills')
         l = 'Assassins by ranking'
 
-    return render_assassins_list(request, game, assassins, l)
+    return render_assassins_list(request, game, assassins, l, page_length)
 
 def render_assassins_list(request, game, assassins, listtitle, page_length=25):
     """ Helper method to paginate assassins list """
@@ -52,9 +52,15 @@ def render_assassins_list(request, game, assassins, listtitle, page_length=25):
     except EmptyPage:
         a_list = paginator.page(paginator.num_pages)
 
+    if request.GET.get('showfbid') == 'yes':
+        showfbid = True
+    else:
+        showfbid = False
+
     return render_with_metadata(request, 'game/assassins.html', game, {
         'assassins': a_list,
         'listtitle': listtitle,
+        'showfbid': showfbid,
         })
 
 def squads(request, game, page_length=25):
