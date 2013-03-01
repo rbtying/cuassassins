@@ -103,14 +103,14 @@ class Assassin(models.Model):
         """ refreshes the action deadline on each assassin """
         if not self.role == AssassinType.POLICE:
             t = now() + timedelta(hours=self.game.disavowed_time)
-            if not self.deadline is None:
-                t2 = self.deadline + timedelta(hours=self.game.disavowed_time)
-                if t2 > t and not soft_reset:
-                    self.set_deadline(t2, commit)
-                else:
-                    self.set_deadline(t, commit)
-            else: 
-                self.set_deadline(t, commit)
+            # if not self.deadline is None:
+            #     t2 = self.deadline + timedelta(hours=self.game.disavowed_time)
+            #     if t2 > t and not soft_reset:
+            #         self.set_deadline(t2, commit)
+            #     else:
+            #         self.set_deadline(t, commit)
+            # else: 
+            self.set_deadline(t, commit)
         else:
             self.set_deadline(now() + timedelta(hours=self.game.police_resurrect_time), commit)
 
