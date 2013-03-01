@@ -49,7 +49,7 @@ def game_cron(request):
     for game in games:
         for a in game.players():
             if a.role == AssassinType.REGULAR:
-                if a.alive == True and now > a.deadline:
+                if a.alive == True and a.deadline and now > a.deadline:
                     a.set_role(AssassinType.DISAVOWED)
             elif a.role == AssassinType.POLICE:
                 if a.alive == False and now > a.deadline:
