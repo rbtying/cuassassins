@@ -16,6 +16,7 @@ class SquadAdmin(admin.ModelAdmin):
     fieldsets = [
             (None, {'fields': ['game', 'name', 'code', 'public', 'alive', 'kills']}), 
             ]
+    list_display = ('name', 'game', 'public',)
     inlines = [AssassinInline]
 
 class AssassinAdmin(admin.ModelAdmin):
