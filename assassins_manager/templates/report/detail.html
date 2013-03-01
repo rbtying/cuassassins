@@ -19,14 +19,22 @@
 <!--</div>-->
 
 <div class="killpicture">
-{% if report.killer.user.columbiauserprofile.facebook_id %}
-<img class="killer" src="{{ MEDIA_URL}}{{ report.killer.user.columbiauserprofile.image }}" alt="{{ report.killer.nickname }}" />
-{% endif %}
-{% if report.corpse.user.columbiauserprofile.facebook_id %}
-<img class="corpse" src="{{ MEDIA_URL}}{{ report.corpse.user.columbiauserprofile.image }}" alt="{{ report.corpse.nickname }}" />
-<h3 class="killer-title">Killer</h3>
-<h3 class="corpse-title">Corpse</h3>
-{% endif %}
+    <section class="killer">
+    <div>
+        {% if report.killer.user.columbiauserprofile.facebook_id %}
+            <img class="killer" src="{{ MEDIA_URL}}{{ report.killer.user.columbiauserprofile.image }}" alt="{{ report.killer.nickname }}" />
+        {% endif %}
+        <h3 class="killer-title">Killer</h3>
+    </div>
+    </section>
+    <section class="corpse">
+        <div>
+            {% if report.corpse.user.columbiauserprofile.facebook_id %}
+                <img class="corpse" src="{{ MEDIA_URL}}{{ report.corpse.user.columbiauserprofile.image }}" alt="{{ report.corpse.nickname }}" />
+            {% endif %}
+            <h3 class="corpse-title">Corpse</h3>
+        </div>
+    </section>
 </div>
 <table class="vertical">
     <tr><th>Killer:</th><td><a href="{% url 'assassin_details' game=game.name username=report.killer.user.username %}">{{ report.killer.nickname }}</a></td></tr>
