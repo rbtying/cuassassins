@@ -36,4 +36,19 @@
     </tr>
     {% endfor %}
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if contracts.has_previous %}
+            <a class="prev" href="?page={{ contracts.previous_page_number}}">Previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ contracts.number }} of {{ contracts.paginator.num_pages }}
+        </span>
+
+        {% if contracts.has_next %}
+            <a class="next" href="?page={{ contracts.next_page_number }}">Next</a>
+        {% endif %}
+</div>
 {% endblock %}

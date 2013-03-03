@@ -72,6 +72,9 @@ def process_kill(request, user, game, killtype, corpse, contract, report):
     """ processes a kill """
     assassin = game.getAssassin(user)
 
+    # just in case
+    corpse.set_life(False, True)
+
     if killtype == ReportType.CONTRACT_KILL:
         game_ended = process_contract(game, contract, corpse)
         if game_ended:
@@ -87,9 +90,9 @@ def process_kill(request, user, game, killtype, corpse, contract, report):
                 if member.alive:
                     temp = True
             if not temp:
-                squad.transfer_contracts()
+                corpse.squad.transfer_contracts()
 
-            squad.save()
+            corpse.squad.save()
 
         if not contract is None:
             process_contract(game, contract, corpse)
@@ -111,13 +114,14 @@ def process_kill(request, user, game, killtype, corpse, contract, report):
     k.save()
     k.send_signal()
 
-    try:
-        fb = api.get_persistent_graph(request, access_token=user.columbiauserprofile.access_token)
-        if fb:
-            url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.report.views.killreport', args=(game_obj.name, k.id, ))
-            result = fb.set('me/cuassassins:made', kill=url)
-    except:
-        pass
+    if request:
+        try:
+            fb = api.get_persistent_graph(request, access_token=user.columbiauserprofile.access_token)
+            if fb:
+                url = 'http://assassins.columbiaesc.com' + reverse('assassins_manager.report.views.killreport', args=(game_obj.name, k.id, ))
+                result = fb.set('me/cuassassins:made', kill=url)
+        except:
+            pass
     
     assassin = game.getAssassin(user)
 
@@ -207,4 +211,31 @@ def report_kill(request, game):
     return render_with_metadata(request, 'form.html', game, {
         'form': form,
         'formname': 'Report a Corpse',
+        })
+
+@user_passes_test(lambda u: u.is_authenticated() and u.is_active)
+def report_kill_admin(request, game):
+    game_obj = get_game(game)
+    assassin_obj = game_obj.getAssassin(request.user)
+    if assassin_obj is None or not assassin_obj.is_admin:
+        raise Http404
+
+    if request.method == 'POST':
+        form = AdminKillForm(request.POST, game=game_obj)
+        if form.is_valid():
+            killtype = form.cleaned_data.get('type')
+            user = form.cleaned_data.get('killer').user
+            corpse = form.cleaned_data.get('corpse')
+            report = form.cleaned_data.get('report')
+            contract = form.cleaned_data.get('contract')
+
+            k = process_kill(None, user, game_obj, killtype, corpse, contract, report)
+
+            return HttpResponseRedirect(reverse('assassins_manager.report.views.killreport', args=(game, k.id,)))
+    else:
+        form = AdminKillForm(game=game_obj)
+
+    return render_with_metadata(request, 'form.html', game, {
+        'form': form,
+        'formname': 'Report a Kill',
         })

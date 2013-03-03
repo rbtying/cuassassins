@@ -94,7 +94,7 @@ def kill_signal_handler(sender, **kwargs):
     if sender.corpse.role == AssassinType.POLICE:
         msg = 'You have been incapacitated by ' + sender.killer.first_name + ' ' + sender.killer.last_name + '. You will be resurrected at ' + sender.corpse.deadline + '.'
     else:
-        msg = 'You have been killed by %s. Better luck next time!'
+        msg = 'You have been killed by %s. Better luck next time!' % sender.killer.nickname
 
     msg += "\nThe kill report: " + sender.report
         

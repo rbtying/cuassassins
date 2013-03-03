@@ -54,4 +54,17 @@ def game_cron(request):
             elif a.role == AssassinType.POLICE:
                 if a.alive == False and now > a.deadline:
                     a.resurrect()
+        for s in game.squad_set.all():
+            alive = False
+            for a in s.members():
+                if a.alive:
+                    alive = True
+            contracts = Contract.objects.filter(game=game, target=s, status=ContractStatus.ACTIVE)
+            if not alive:
+                for contract in contracts:
+                    contract.set_status(ContractStatus.COMPLETE, True)
+            elif not contracts:
+                contract = Contract(holder=game.squad_set.all()[0], target=s)
+                contract.game = game
+                contract.save()
     return HttpResponse("done")

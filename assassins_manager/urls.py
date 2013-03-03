@@ -44,6 +44,7 @@ urlpatterns += patterns('assassins_manager.assassin.views',
     )
 urlpatterns += patterns('assassins_manager.kill.views',
         url(r'^(?P<game>.+)/report_kill/$', 'report_kill', name='report_kill'),
+        url(r'^(?P<game>.+)/report_kill_admin/$', 'report_kill_admin', name='report_kill_admin'),
         url(r'^report_kill_text/(?P<number>.+)/(?P<text>.+)/$', 'report_kill_text', name='report_kill_text'),
         url(r'^text/$', 'text', name='text'),
     )

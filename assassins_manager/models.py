@@ -119,7 +119,7 @@ class Assassin(models.Model):
             t = now() + timedelta(hours=self.game.disavowed_time)
             if not self.deadline is None:
                 t2 = self.deadline + timedelta(hours=self.game.disavowed_time)
-                if t2 > t1:
+                if t2 > t:
                     self.set_deadline(t2, commit)
                 else:
                     self.set_deadline(t, commit)

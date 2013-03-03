@@ -1,6 +1,91 @@
 from django import forms
 from assassins_manager.models import *
 
+class AdminKillForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.game = kwargs.pop('game', None)
+        super(AdminKillForm, self).__init__(*args, **kwargs)
+        qset1 = self.game.players()
+        qset2 = qset1.filter(alive=True)
+
+        self.fields['killer'] = forms.ModelChoiceField(queryset=qset1)
+        self.fields['corpse'] = forms.ModelChoiceField(queryset=qset2)
+        self.fields['report'] = forms.CharField(widget=forms.Textarea)
+        self.fields['type'] = forms.IntegerField()
+        self.fields['contract'] = forms.ModelChoiceField(queryset=Contract.objects.filter(game=self.game))
+        self.fields.keyOrder = ['killer', 'corpse', 'report']
+
+    def clean_report(self):
+        if self.cleaned_data.get('report') == '':
+            raise forms.ValidationError('Please enter a kill report')
+        else:
+            return self.cleaned_data.get('report')
+
+    def clean_corpse(self):
+        a = self.cleaned_data.get('corpse')
+        if a is None:
+            raise forms.ValidationError('Who was killed?')
+        else:
+            return a
+
+    def clean_killer(self):
+        a = self.cleaned_data.get('killer')
+        if a is None:
+            raise forms.ValidationError('Who killed who?')
+        else:
+            return a
+
+    def clean(self):
+        corpse = self.cleaned_data.get('corpse')
+        killer = self.cleaned_data.get('killer')
+        squad = killer.squad
+
+        if killer.role == AssassinType.POLICE:
+            if not corpse.role == AssassinType.DISAVOWED:
+                raise forms.ValidationError('Police may only kill disavowed players')
+            else:
+                self.cleaned_data['type'] = ReportType.SANCTIONED_KILL
+                self.cleaned_data['contract'] = None
+                return self.cleaned_data
+
+        forward = False
+        try:
+            # see if there are any forward contracts
+            c = Contract.objects.get(game=self.game, holder=squad, target=corpse.squad, status=ContractStatus.ACTIVE)
+            forward = True
+        except Contract.DoesNotExist:
+            c = None
+
+        if c is None:
+            try:
+                # see if the contract was reversed (ie self defense)
+                c = Contract.objects.get(game=self.game, holder=corpse.squad, target=squad, status=ContractStatus.ACTIVE)
+                forward = False
+            except Contract.DoesNotExist:
+                c = None
+
+        self.cleaned_data['contract'] = c
+
+        # police can be killed only in self-defense
+        if corpse.role == AssassinType.POLICE:
+            self.cleaned_data['type'] = ReportType.SELF_DEFENSE
+            self.cleaned_data['contract'] = None
+            return self.cleaned_data
+
+        # only people holding the contract can kill this guy, or self-defense
+        if not c is None:
+            if forward:
+                self.cleaned_data['type'] = ReportType.CONTRACT_KILL
+            else:
+                self.cleaned_data['type'] = ReportType.SELF_DEFENSE
+
+            self.cleaned_data['contract'] = c
+            return self.cleaned_data
+
+        self.cleaned_data['type'] = ReportType.SANCTIONED_KILL
+        self.cleaned_data['contract'] = None
+        return self.cleaned_data
+
 class KillForm(forms.Form):
     """ Form to test and verify kills """
 
@@ -52,7 +137,7 @@ class KillForm(forms.Form):
 
         if lifecode == corpsecode.lower():
             if self.assassin.role == AssassinType.POLICE:
-                if not corpse.assassin.role == AssassinType.DISAVOWED:
+                if not corpse.role == AssassinType.DISAVOWED:
                     raise forms.ValidationError('Police may only kill disavowed players')
                 else:
                     self.cleaned_data['type'] = ReportType.SANCTIONED_KILL
