@@ -433,6 +433,9 @@ class KillReport(models.Model):
     report = models.TextField()
     game = models.ForeignKey(Game)
     date = models.DateTimeField(default=datetime.now)
+
+    def __unicode__(self):
+        return str(self.date)
     
     def send_signal(self):
         kill_signal.send(sender=self)

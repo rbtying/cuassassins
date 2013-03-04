@@ -1,5 +1,5 @@
 from django.contrib import admin
-from assassins_manager.models import Squad, Assassin, Contract, Game
+from assassins_manager.models import Squad, Assassin, Contract, Game, KillReport
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import forms
@@ -27,3 +27,4 @@ admin.site.register(Assassin, AssassinAdmin)
 admin.site.register(Squad, SquadAdmin)
 admin.site.register(Game)
 admin.site.register(Contract)
+admin.site.register(KillReport)

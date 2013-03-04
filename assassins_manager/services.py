@@ -50,7 +50,7 @@ def game_cron(request):
         for a in game.players():
             if a.role == AssassinType.REGULAR:
                 if a.alive == True and a.deadline and now > a.deadline:
-                    a.set_role(AssassinType.DISAVOWED)
+                    a.set_role(AssassinType.DISAVOWED, True)
             elif a.role == AssassinType.POLICE:
                 if a.alive == False and now > a.deadline:
                     a.resurrect()

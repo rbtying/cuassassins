@@ -5,11 +5,10 @@ class AdminKillForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.game = kwargs.pop('game', None)
         super(AdminKillForm, self).__init__(*args, **kwargs)
-        qset1 = self.game.players()
-        qset2 = qset1.filter(alive=True)
+        qset1 = self.game.players().order_by('nickname').distinct()
 
         self.fields['killer'] = forms.ModelChoiceField(queryset=qset1)
-        self.fields['corpse'] = forms.ModelChoiceField(queryset=qset2)
+        self.fields['corpse'] = forms.ModelChoiceField(queryset=qset1)
         self.fields['report'] = forms.CharField(widget=forms.Textarea)
         self.fields['type'] = forms.IntegerField()
         self.fields['contract'] = forms.ModelChoiceField(queryset=Contract.objects.filter(game=self.game))
