@@ -16,7 +16,7 @@ def disavowed(request, game):
 
     assassins = game_obj.players().filter(role=AssassinType.DISAVOWED).order_by('-alive', '-kills')
 
-    return render_assassins_list(request, game, assassins, 'Disavowed Assassins')
+    return render_assassins_list(request, game, assassins, 'Disavowed Assassins', 1000)
 
 def police(request, game):
     """ Shows all police in the game """
@@ -24,7 +24,7 @@ def police(request, game):
 
     assassins = game_obj.players().filter(role=AssassinType.POLICE).order_by('-kills', '-alive')
 
-    return render_assassins_list(request, game, assassins, 'Police')
+    return render_assassins_list(request, game, assassins, 'Police', 1000)
 
 def assassins(request, game, page_length=25):
     """ Shows all assassins in the game, sorted by squad """
@@ -42,6 +42,9 @@ def assassins(request, game, page_length=25):
 def render_assassins_list(request, game, assassins, listtitle, page_length=25):
     """ Helper method to paginate assassins list """
     page = request.GET.get('page')
+
+    if request.GET.get('pagelen'):
+        page_length = request.GET.get('pagelen')
 
     paginator = Paginator(assassins, page_length)
 
