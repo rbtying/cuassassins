@@ -67,4 +67,5 @@ def game_cron(request):
                 contract = Contract(holder=game.squad_set.all()[0], target=s)
                 contract.game = game
                 contract.save()
+            s.set_life(alive, True)
     return HttpResponse("done")
