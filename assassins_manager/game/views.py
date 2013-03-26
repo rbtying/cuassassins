@@ -31,11 +31,11 @@ def assassins(request, game, page_length=25):
     game_obj = get_game(game)
 
     if request.GET.get('sortby') == 'kills':
-        assassins = game_obj.players().order_by('role','-kills', '-alive')
+        assassins = game_obj.players().order_by('-kills', '-alive', 'role')
         l = 'Assassins by kills'
     else:
-        assassins = game_obj.players().order_by('role', '-alive', '-kills')
-        l = 'Assassins by ranking'
+        assassins = game_obj.players().order_by('-alive', 'role', '-kills')
+        l = 'Assassins by status'
 
     return render_assassins_list(request, game, assassins, l, page_length)
 
