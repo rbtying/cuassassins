@@ -21,7 +21,7 @@ class SquadAdmin(admin.ModelAdmin):
 
 class AssassinAdmin(admin.ModelAdmin):
     """ Admin class to handle assassins """
-    list_display = ('user', 'lifecode', 'alive', 'role',)
+    list_display = ('user', 'lifecode', 'alive', 'role', 'frozen')
 
 admin.site.register(Assassin, AssassinAdmin)
 admin.site.register(Squad, SquadAdmin)

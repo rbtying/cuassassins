@@ -40,7 +40,7 @@ def process_contract(game, contract, corpse):
         members = killer.members()
         for member in members:
             print('processing member %s\n' % member.user.username)
-            if member.alive and member.role == AssassinType.DISAVOWED:
+            if member.alive and member.role == AssassinType.DISAVOWED and not member.frozen:
                 member.set_role(AssassinType.REGULAR, commit=False)
             member.refresh_deadline(commit=False) # calls save internally
             member.save()

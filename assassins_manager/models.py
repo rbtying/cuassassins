@@ -37,6 +37,7 @@ class Assassin(models.Model):
     deadline = models.DateTimeField(blank=True, null=True)
 
     role = models.IntegerField(default=AssassinType.NOT_IN_GAME)
+    frozen = models.BooleanField(default=False)
 
     squad = models.ForeignKey('Squad', null=True, blank=True)
     game = models.ForeignKey('Game')
