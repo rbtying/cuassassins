@@ -5,7 +5,7 @@ from django.conf import settings
 from django.template.context import RequestContext
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
-from assassins_manager.models import Assassin, Squad, Contract, Game
+from assassins_manager.models import Assassin, Squad, Contract, Game, GameStatus
 from assassins_manager.services import render_with_metadata, get_game
 from forms import AssassinEditForm
 
@@ -39,11 +39,13 @@ def details(request, game, username):
         form = AssassinEditForm(instance=user.columbiauserprofile)
 
     show_lifecode = user == request.user or (assassin_obj.squad == squad and assassin_obj.squad != None)
+
     # if user != request.user:
     #    form = None 
 
     return render_with_metadata(request, 'assassin/details.html', game, {
         'assassin': assassin_obj,
         'show_lifecode': show_lifecode,
+        'game_started': game_obj.status != GameStatus.REGISTRATION,
         'form': form,
         })

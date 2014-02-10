@@ -61,12 +61,19 @@
         <th>Deaths:</th>
         <td><a href="{% url 'player_deaths' game=game.name username=assassin.user.username %}">{{ assassin.deathreports|length }}</a></td>
     </tr>
-    {% if show_lifecode or user.is_staff %}
-    <tr>
-        <th>Lifecode:</th>
-        <td>{{ assassin.lifecode }}</td>
-    </tr>
-    {% endif %}
+	{% if game_started %}
+		{% if show_lifecode or user.is_staff %}
+		<tr>
+			<th>Lifecode:</th>
+			<td>{{ assassin.lifecode }}</td>
+		</tr>
+		{% endif %}
+	{% else %}
+		<tr>
+			<th>Lifecode:</th>
+			<td>The game has not started. Check back later for your code!</td>
+		</tr>
+	{% endif %}
     {% if assassin_current.is_police %}
     <tr>
         <th>Address:</th>

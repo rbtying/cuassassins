@@ -61,13 +61,14 @@ STATIC_ROOT = '/home/cuseas/domains/assassins.columbiaesc.com/cuassassins/static
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://assassins.columbiaesc.com/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    '/home/cuseas/domains/assassins.columbiaesc.com/cuassassins/static/'
 )
 
 # List of finder classes that know how to find static files in
@@ -181,6 +182,8 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+ALLOWED_HOSTS = '*'
 
 try:
     LOCAL_SETTINGS

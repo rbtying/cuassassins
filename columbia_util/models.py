@@ -43,6 +43,12 @@ class ColumbiaUserProfile(FacebookProfileModel):
         if commit:
             self.save()
 
+	def __str__(self):
+		return self.user.get_full_name()
+
+	def __unicode__(self):
+		return self.user.get_full_name()
+
 @receiver(post_save, sender=User)
 def createColumbiaUserProfile(sender, instance, created, **kwargs):
     if created:
