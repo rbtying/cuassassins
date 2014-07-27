@@ -4,13 +4,18 @@ from models import *
 from signals import *
 from django.conf import settings
 from django.core.mail import send_mail 
+import traceback
+import sys
 
 prefix = '[CU Assassins] '
 
 def send(subj, msg, emails):
     """ Helper method to send emails """
     msg += "\n\n-- CU Assassins"
-    send_mail(prefix + subj, msg, settings.DEFAULT_FROM_EMAIL, emails)
+    try:
+        send_mail(prefix + subj, msg, settings.DEFAULT_FROM_EMAIL, emails)
+    except Exception, e:
+        print >> sys.stderr, traceback.format_exc()
 
 @receiver(assassin_life_signal)
 def assassin_life_signal_handler(sender, changed, status, **kwargs):
